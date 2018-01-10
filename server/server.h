@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 15:31:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/10 11:52:10 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/10 16:44:16 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int     accept_fork(unsigned int sock);
 ** cmd_server
 */
 
-int     cmd_ls(int fd);
-int		cmd_cd(char *arg);
-int		cmd_pwd();
-int		cmd_mkdir(char *arg);
+int		cmd_ls(int fd, char *arg);
+int		cmd_cd(int fd, char *arg);
+int		cmd_pwd(int fd);
+int		cmd_mkdir(int fd, char *arg);
 
 #endif

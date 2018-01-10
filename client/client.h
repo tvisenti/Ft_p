@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 16:47:33 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/09 16:52:53 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/10 15:54:16 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@
 ** client
 */
 
-void    usage(char *str);
-int     create_client(char *addr, int port);
-void    wait_user_input(int fd);
+void	usage(char *str);
+int		create_client(char *addr, int port);
+void	wait_user_input(int fd);
+void	read_client(int fd, char *buf);
 
 #endif
