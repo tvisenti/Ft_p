@@ -6,22 +6,22 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/08 11:00:03 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/10 13:56:08 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#include "server.h"
 
 void    usage(char *str)
 {
     printf("Usage: %s <port>\n", str);
-    exit(-1);
+    exit (-1);
+}
+
+int     print_error(char *str)
+{
+    printf("Error: %s\n", str);
+    return (-1);
 }
 
 /*
@@ -43,36 +43,82 @@ int     create_server(int port)
     sin.sin_port = htons(port);
     sin.sin_addr.s_addr = htonl(INADDR_ANY);
     if (bind(sock, (const struct  sockaddr *)&sin, sizeof(sin)) == -1)
-    {
-        printf("Bind error");
-        exit(-1);
-    }
+        return print_error("Bind failed");
     listen(sock, 42);
     return (sock);
+}
+
+void     handler_serv(int fd)
+{
+    int                 r;
+    char                buf[1024];
+
+    ft_bzero(buf, 1023);
+    while (42)
+    {
+        if ((r = read(fd, buf, 1023)) > 0)
+        {
+            printf("Buf: %s\n", buf);
+            printf("----------\n");
+            if (ft_strncmp(buf, "ls", 2) == 0 && ft_strlen(buf) == 2)
+                cmd_ls(fd);
+            else if (ft_strncmp(buf, "cd", 2) == 0 && ft_strlen(buf) > 3 && buf[2] == ' ')
+                cmd_cd(buf);
+            else if (ft_strcmp(buf, "quit") == 0 && ft_strlen(buf) == 4)
+                return ;
+            else if (ft_strcmp(buf, "pwd") == 0 && ft_strlen(buf) == 3)
+                cmd_pwd();
+            else if (ft_strncmp(buf, "mkdir", 5) == 0 && ft_strlen(buf) > 6 && buf[5] == ' ')
+                cmd_mkdir(buf);
+            else
+                printf("[%s] is a unknown commad.\n", buf);
+            ft_bzero(buf, 1023);
+            printf("----------\n");
+        }
+    }
+}
+
+int     accept_fork(unsigned int sock)
+{
+    int                 cs;
+    struct sockaddr_in  *csin;
+    unsigned int        cslen;    
+    pid_t               pid;
+    int                 sock_client;
+
+    while (42)
+    {
+        if ((sock_client = accept(sock, (struct sockaddr*)&csin, &cslen)))
+        {
+            if ((pid = fork()) == -1)
+                return print_error("Fork failed");
+            else if (pid == 0)
+            {
+                handler_serv(sock_client);
+                close(sock_client);
+                break ;
+            }
+        }
+        else
+            return print_error("Accept failed");
+    }
+    close(cs);
+    return (1);
 }
 
 int     main(int ac, char **av)
 {
     int                 port;
-    int                 sock;
-    int                 cs;
-    struct sockaddr_in  *csin;
-    unsigned int        cslen;
-    int                 r;
-    char                buf[1024];
+    unsigned int        sock;
+
 
     if (ac != 2)
         usage(av[0]);
     port = atoi(av[1]);
-    sock = create_server(port);
-    cs = accept(sock, (struct sockaddr*)&csin, &cslen);
-    while ((r = read(cs, buf, 1023)) > 0)
-    {
-        buf[r] = '\0';
-        printf("received %d bytes: \n%s", r, buf);
-    }
-    close(cs);
+    if ((sock = create_server(port)) == -1)
+        return (-1);
+    if ((accept_fork(sock)) == -1)
+        return (-1);
     close(sock);
-
     return (0);
 }

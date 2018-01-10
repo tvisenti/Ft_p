@@ -6,17 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/08 11:49:01 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/10 13:46:20 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#include "client.h"
 
 void    usage(char *str)
 {
@@ -45,16 +39,34 @@ int     create_client(char *addr, int port)
     return (sock);
 }
 
+void    wait_user_input(int fd)
+{
+    int                 r;
+    char                buf[1024];
+    
+    ft_bzero(buf, 1023);
+    while ((r = read(1, buf, 1023)) > 0)
+    {
+        printf("$> ");
+        buf[r - 1] = '\0';
+        
+        ft_putstr_fd(buf, fd);
+        if (ft_strcmp(buf, "quit") == 0)
+            return ;
+        ft_bzero(buf, 1023);
+    }
+}
+
 int     main(int ac, char **av)
 {
-    int                 port;
-    int                 sock;
+    int     port;
+    int     sock;
 
     if (ac != 3)
         usage(av[0]);
     port = atoi(av[2]);
     sock = create_client(av[1], port);
-    write(sock, "Bonjour\n", 8);
+    wait_user_input(sock);
     close(sock);
     return (0);
 }
