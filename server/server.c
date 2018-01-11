@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/10 17:51:56 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/11 17:48:56 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@ void    usage(char *str)
 {
     printf("Usage: %s <port>\n", str);
     exit (-1);
+}
+
+void	print_fd_err(char *str, int fd)
+{
+	ft_putendl(str);
+	ft_putendl_fd(str, fd);
+	write(fd, "\0", 1);
+	return ;
+}
+
+void	print_fd(char *str, int fd)
+{
+	ft_putendl(str);
+	ft_putendl_fd(str, fd);
 }
 
 int     print_error(char *str)
@@ -50,30 +64,34 @@ int     create_server(int port)
 
 void     handler_serv(int fd)
 {
-    int                 r;
-    char                buf[1024];
-
-    ft_bzero(buf, 1024);
+    char                *str;
+    char                *pwd;
+    char                *buf;
+    
+    pwd = malloc(sizeof(char) * UCHAR_MAX);
+    getcwd(pwd, UCHAR_MAX);
     while (42)
     {
-        if ((r = read(fd, buf, 1024)) > 0)
+        if (get_next_line(fd, &buf) > 0)
         {
-            printf("Buf: %s\n", buf);
-            printf("----------\n");
-            if (ft_strncmp(buf, "ls", 2) == 0 && ft_strlen(buf) >= 2)
-                cmd_ls(fd, ft_strsub(buf, 3, ft_strlen(buf)));
-            else if (ft_strncmp(buf, "cd", 2) == 0 && ft_strlen(buf) > 3 && buf[2] == ' ')
-                cmd_cd(fd, buf);
-            else if (ft_strcmp(buf, "quit") == 0 && ft_strlen(buf) == 4)
+            str = ft_strdup(buf);
+            ft_putstr("Buf: ");
+            ft_putendl(str);
+            ft_putendl("---------");
+            if (ft_strncmp(str, "ls", 2) == 0 && ft_strlen(str) >= 2)
+                cmd_ls(fd, ft_strsub(str, 3, ft_strlen(str)));
+            else if (ft_strncmp(str, "cd", 2) == 0 && ft_strlen(str) > 3 && str[2] == ' ')
+                cmd_cd(fd, ft_strsub(str, 3, ft_strlen(str)), pwd);
+            else if (ft_strcmp(str, "quit") == 0 && ft_strlen(str) == 4)
                 return ;
-            else if (ft_strcmp(buf, "pwd") == 0 && ft_strlen(buf) == 3)
+            else if (ft_strcmp(str, "pwd") == 0 && ft_strlen(str) == 3)
                 cmd_pwd(fd);
-            else if (ft_strncmp(buf, "mkdir", 5) == 0 && ft_strlen(buf) > 6 && buf[5] == ' ')
-                cmd_mkdir(fd, buf);
+            else if (ft_strncmp(str, "mkdir", 5) == 0 && ft_strlen(str) > 6 && str[5] == ' ')
+                cmd_mkdir(fd, str);
             else
-                printf("[%s] is a unknown command.\n", buf);
-            ft_bzero(buf, ft_strlen(buf));
-            printf("----------\n");
+                print_fd_err("-> ERROR: Command not found", fd);
+            ft_putendl("---------");
+            free(str);
         }
     }
 }

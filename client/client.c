@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/10 17:44:38 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/11 14:50:12 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int     create_client(char *addr, int port)
 	sin.sin_addr.s_addr = inet_addr(addr);
 	if (connect(sock, (const struct  sockaddr *)&sin, sizeof(sin)) == -1)
 	{
-		printf("Connect error\n");
+		ft_putstr("Connect error\n");
 		exit(2);
 	}
 	return (sock);
@@ -41,17 +41,17 @@ int     create_client(char *addr, int port)
 
 void    read_client(int fd, char *buf)
 {
-	int r;
+	int	r;
 
-	ft_putstr("buf: ");
-	ft_putendl(buf);
-	while ((r = get_next_line(fd, &buf)) > 0 && buf[0] != '\0' && r == 1 && ft_isprint(buf[0]))
+	// ft_putstr("Buf: ");
+	// ft_putendl(buf);
+	while ((r = read(fd, buf, 1)))
 	{
-		buf[ft_strlen(buf)] = '\0';
-		ft_putendl(buf);
-		ft_bzero(buf, ft_strlen(buf));
+		if (!buf[0])
+			break ;
+		buf[r] = '\0';
+		write(1, buf, r);
 	}
-	printf("Je SORS");
 }
 
 void    wait_user_input(int fd)
@@ -61,7 +61,8 @@ void    wait_user_input(int fd)
 	
 	while ((r = get_next_line(0, &buf)) > 0)
 	{
-		buf[ft_strlen(buf)] = '\0';
+		buf[ft_strlen(buf)] = '\n';
+		buf[ft_strlen(buf) + 1] = '\0';
 		ft_putstr_fd(buf, fd);
 		if (ft_strcmp(buf, "quit") == 0)
 			return ;
