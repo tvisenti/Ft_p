@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 11:24:25 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 14:20:13 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client.h"
+#include "../ft_p.h"
 
 void    usage(char *str)
 {

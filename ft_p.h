@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 12:54:24 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 14:21:09 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/wait.h>
 # include <stdio.h>
 # include <limits.h>
-# include "../libft/inc/libft.h"
+# include "libft/inc/libft.h"
 
 /*
 ** server

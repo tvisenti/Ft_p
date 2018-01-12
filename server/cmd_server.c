@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 11:24:35 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 12:53:38 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 14:22:05 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server.h"
+#include "../ft_p.h"
 
 int		check_permissions(int fd, char *absolute_path, char *arg, int ls)
 {
@@ -25,11 +25,11 @@ int		check_permissions(int fd, char *absolute_path, char *arg, int ls)
 		if (ls == 0)
 		{
 			chdir(absolute_path);
-			print_fd_err("\033[31mERROR: cd, no permissions
+			print_fd_err("\033[31mERROR: cd, no permissions \
 			to access here\033[0m", fd);
 		}
 		else
-			print_fd_err("\033[31mERROR: ls, no permissions
+			print_fd_err("\033[31mERROR: ls, no permissions \
 			to access here\033[0m", fd);
 		return (0);
 	}
@@ -45,7 +45,7 @@ void	cmd_ls(int fd, char *arg, char *absolute_path)
 	if (ft_strlen(arg) == 0 || !arg)
 		arg = ft_strdup(".");
 	if (!(dir = opendir(arg)))
-		return print_fd_err("\033[31mERROR: ls, can't access to
+		return print_fd_err("\033[31mERROR: ls, can't access to \
 		this dir\033[0m", fd);
 	if (check_permissions(fd, absolute_path, arg, 1) == 0)
 		return ;
@@ -67,7 +67,7 @@ void	cmd_cd(int fd, char *arg, char *absolute_path)
 
 	dir = ft_strdup(arg);
 	if (!dir || ft_strlen(dir) == 0)
-		return print_fd_err("\033[31mERROR: cd, Failed to get arg for
+		return print_fd_err("\033[31mERROR: cd, Failed to get arg for \
 		cd command\033[0m", fd);
 	if ((ret = chdir(dir)) == -1)
 		return print_fd_err("\033[31mERROR: cd, chdir failed\033[0m", fd);
@@ -92,7 +92,7 @@ void	cmd_pwd(int fd)
 void	cmd_mkdir(int fd, char *arg)
 {
 	if (!arg || ft_strlen(arg) == 0)
-		return print_fd_err("\033[31mERROR: mkdir failed, no path
+		return print_fd_err("\033[31mERROR: mkdir failed, no path \
 		specified\033[0m", fd);
 	ft_putstr("New dir: ");
 	ft_putendl(arg);
