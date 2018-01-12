@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/11 14:50:12 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 11:24:25 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,12 @@ void    read_client(int fd, char *buf)
 {
 	int	r;
 
-	// ft_putstr("Buf: ");
-	// ft_putendl(buf);
-	while ((r = read(fd, buf, 1)))
+	while ((r = read(fd, buf, 1)) > 0 && buf[0] != '\0')
 	{
-		if (!buf[0])
-			break ;
 		buf[r] = '\0';
 		write(1, buf, r);
 	}
+	write(1, "$> ", 3);
 }
 
 void    wait_user_input(int fd)
@@ -59,11 +56,11 @@ void    wait_user_input(int fd)
 	int                 r;
 	char                *buf;
 	
+	write(1, "$> ", 3);
 	while ((r = get_next_line(0, &buf)) > 0)
 	{
-		buf[ft_strlen(buf)] = '\n';
-		buf[ft_strlen(buf) + 1] = '\0';
-		ft_putstr_fd(buf, fd);
+		ft_putendl_fd(buf, fd);
+		write(fd, "\0", 1);
 		if (ft_strcmp(buf, "quit") == 0)
 			return ;
 		else

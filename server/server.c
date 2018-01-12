@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/11 17:48:56 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 12:53:33 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server.h"
+#include "../ft_p.h"
 
 void    usage(char *str)
 {
@@ -20,7 +20,7 @@ void    usage(char *str)
 
 void	print_fd_err(char *str, int fd)
 {
-	ft_putendl(str);
+    ft_putendl(str);
 	ft_putendl_fd(str, fd);
 	write(fd, "\0", 1);
 	return ;
@@ -79,15 +79,15 @@ void     handler_serv(int fd)
             ft_putendl(str);
             ft_putendl("---------");
             if (ft_strncmp(str, "ls", 2) == 0 && ft_strlen(str) >= 2)
-                cmd_ls(fd, ft_strsub(str, 3, ft_strlen(str)));
+                cmd_ls(fd, &str[3], pwd);
             else if (ft_strncmp(str, "cd", 2) == 0 && ft_strlen(str) > 3 && str[2] == ' ')
-                cmd_cd(fd, ft_strsub(str, 3, ft_strlen(str)), pwd);
+                cmd_cd(fd, &str[3], pwd);
             else if (ft_strcmp(str, "quit") == 0 && ft_strlen(str) == 4)
                 return ;
             else if (ft_strcmp(str, "pwd") == 0 && ft_strlen(str) == 3)
                 cmd_pwd(fd);
             else if (ft_strncmp(str, "mkdir", 5) == 0 && ft_strlen(str) > 6 && str[5] == ' ')
-                cmd_mkdir(fd, str);
+                cmd_mkdir(fd, &str[6]);
             else
                 print_fd_err("-> ERROR: Command not found", fd);
             ft_putendl("---------");
