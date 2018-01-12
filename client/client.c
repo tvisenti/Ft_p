@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 15:39:32 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 17:11:29 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ void	wait_user_input(int fd)
 		write(fd, "\0", 1);
 		if (ft_strcmp(buf, "quit") == 0)
 			return ;
+		else if (ft_strncmp(buf, "get ", 4) == 0 && ft_strlen(buf) > 4)
+			cmd_get(fd, buf);
+		else if (ft_strncmp(buf, "put ", 4) == 0 && ft_strlen(buf) > 4)
+			cmd_put(fd, buf);
 		else
 			read_client(fd, ft_strdup(buf));
 		ft_bzero(buf, ft_strlen(buf));

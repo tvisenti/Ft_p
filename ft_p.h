@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 15:17:35 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 17:11:03 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@
 # include <stdio.h>
 # include <limits.h>
 # include "libft/inc/libft.h"
+
+
+/*
+** cmd_get
+*/
+
+void	cmd_get(int fd, char *buf);
+
+/*
+** cmd_put
+*/
+
+void	cmd_put(int fd, char *buf);
 
 /*
 ** display

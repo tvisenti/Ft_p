@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 15:37:43 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 17:16:07 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	get_cmd(char *buf, int fd, char *pwd)
 	str[5] == ' ')
 		cmd_mkdir(fd, &str[6]);
 	else
-		print_fd_err("-> ERROR: Command not found", fd);
+		print_fd_err("\033[31mERROR: Command not found\033[0m", fd);
 	free(str);
 }
 
