@@ -6,37 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 12:53:33 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 15:16:43 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_p.h"
-
-void    usage(char *str)
-{
-    printf("Usage: %s <port>\n", str);
-    exit (-1);
-}
-
-void	print_fd_err(char *str, int fd)
-{
-    ft_putendl(str);
-	ft_putendl_fd(str, fd);
-	write(fd, "\0", 1);
-	return ;
-}
-
-void	print_fd(char *str, int fd)
-{
-	ft_putendl(str);
-	ft_putendl_fd(str, fd);
-}
-
-int     print_error(char *str)
-{
-    printf("Error: %s\n", str);
-    return (-1);
-}
 
 /*
 ** Cree un server et recupere avec protobyname le protocol number avec 
@@ -62,9 +36,32 @@ int     create_server(int port)
     return (sock);
 }
 
+void    get_cmd(char *buf, int fd, char *pwd)
+{
+    char    *str;
+
+    str = ft_strdup(buf);
+    ft_putstr("$> ");
+    ft_putendl(str);
+    if (ft_strncmp(str, "ls", 2) == 0 && ft_strlen(str) >= 2)
+        cmd_ls(fd, &str[3], pwd);
+    else if (ft_strncmp(str, "cd", 2) == 0 && ft_strlen(str) > 3 &&
+    str[2] == ' ')
+        cmd_cd(fd, &str[3], pwd);
+    else if (ft_strcmp(str, "quit") == 0 && ft_strlen(str) == 4)
+        return ;
+    else if (ft_strcmp(str, "pwd") == 0 && ft_strlen(str) == 3)
+        cmd_pwd(fd);
+    else if (ft_strncmp(str, "mkdir", 5) == 0 && ft_strlen(str) > 6 &&
+    str[5] == ' ')
+        cmd_mkdir(fd, &str[6]);
+    else
+        print_fd_err("-> ERROR: Command not found", fd);
+    free(str);
+}
+
 void     handler_serv(int fd)
 {
-    char                *str;
     char                *pwd;
     char                *buf;
     
@@ -73,26 +70,7 @@ void     handler_serv(int fd)
     while (42)
     {
         if (get_next_line(fd, &buf) > 0)
-        {
-            str = ft_strdup(buf);
-            ft_putstr("Buf: ");
-            ft_putendl(str);
-            ft_putendl("---------");
-            if (ft_strncmp(str, "ls", 2) == 0 && ft_strlen(str) >= 2)
-                cmd_ls(fd, &str[3], pwd);
-            else if (ft_strncmp(str, "cd", 2) == 0 && ft_strlen(str) > 3 && str[2] == ' ')
-                cmd_cd(fd, &str[3], pwd);
-            else if (ft_strcmp(str, "quit") == 0 && ft_strlen(str) == 4)
-                return ;
-            else if (ft_strcmp(str, "pwd") == 0 && ft_strlen(str) == 3)
-                cmd_pwd(fd);
-            else if (ft_strncmp(str, "mkdir", 5) == 0 && ft_strlen(str) > 6 && str[5] == ' ')
-                cmd_mkdir(fd, &str[6]);
-            else
-                print_fd_err("-> ERROR: Command not found", fd);
-            ft_putendl("---------");
-            free(str);
-        }
+            get_cmd(buf, fd, pwd);
     }
 }
 

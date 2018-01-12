@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 14:21:09 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 15:17:35 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,19 @@
 # include "libft/inc/libft.h"
 
 /*
-** server
+** display
 */
 
 void    usage(char *str);
 void	print_fd_err(char *str, int fd);
 void	print_fd(char *str, int fd);
-int     print_error(char *str);
+int		print_error(char *str);
+
+/*
+** server
+*/
+
+void	get_cmd(char *buf, int fd, char *pwd);
 int     create_server(int port);
 void    handler_serv(int fd);
 int     accept_fork(unsigned int sock);

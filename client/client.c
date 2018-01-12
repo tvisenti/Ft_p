@@ -6,17 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 14:20:13 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 15:10:59 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_p.h"
-
-void    usage(char *str)
-{
-	printf("Usage: %s <addr> <port>\n", str);
-	exit(-1);
-}
 
 int     create_client(char *addr, int port)
 {
