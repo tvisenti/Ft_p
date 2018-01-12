@@ -6,13 +6,13 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 11:24:35 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 14:22:05 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/12 15:32:38 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_p.h"
 
-int		check_permissions(int fd, char *absolute_path, char *arg, int ls)
+int			check_permissions(int fd, char *absolute_path, char *arg, int ls)
 {
 	char	path[UCHAR_MAX];
 
@@ -36,7 +36,7 @@ int		check_permissions(int fd, char *absolute_path, char *arg, int ls)
 	return (1);
 }
 
-void	cmd_ls(int fd, char *arg, char *absolute_path)
+void		cmd_ls(int fd, char *arg, char *absolute_path)
 {
 	DIR				*dir;
 	struct dirent	*file;
@@ -45,8 +45,10 @@ void	cmd_ls(int fd, char *arg, char *absolute_path)
 	if (ft_strlen(arg) == 0 || !arg)
 		arg = ft_strdup(".");
 	if (!(dir = opendir(arg)))
-		return print_fd_err("\033[31mERROR: ls, can't access to \
-		this dir\033[0m", fd);
+	{
+		return (print_fd_err("\033[31mERROR: ls, can't access to \
+		this dir\033[0m", fd));
+	}
 	if (check_permissions(fd, absolute_path, arg, 1) == 0)
 		return ;
 	while ((file = readdir(dir)))
@@ -60,17 +62,19 @@ void	cmd_ls(int fd, char *arg, char *absolute_path)
 	closedir(dir);
 }
 
-void	cmd_cd(int fd, char *arg, char *absolute_path)
+void		cmd_cd(int fd, char *arg, char *absolute_path)
 {
 	char	*dir;
 	int		ret;
 
 	dir = ft_strdup(arg);
 	if (!dir || ft_strlen(dir) == 0)
-		return print_fd_err("\033[31mERROR: cd, Failed to get arg for \
-		cd command\033[0m", fd);
+	{
+		return (print_fd_err("\033[31mERROR: cd, Failed to get arg for \
+		cd command\033[0m", fd));
+	}
 	if ((ret = chdir(dir)) == -1)
-		return print_fd_err("\033[31mERROR: cd, chdir failed\033[0m", fd);
+		return (print_fd_err("\033[31mERROR: cd, chdir failed\033[0m", fd));
 	if (check_permissions(fd, absolute_path, arg, 0) == 0)
 		return ;
 	print_fd("\033[32mSUCCESS: cd\033[0m", fd);
@@ -78,22 +82,24 @@ void	cmd_cd(int fd, char *arg, char *absolute_path)
 	free(dir);
 }
 
-void	cmd_pwd(int fd)
+void		cmd_pwd(int fd)
 {
 	char	path[UCHAR_MAX];
 
 	if (getcwd(path, UCHAR_MAX) == NULL)
-		return print_fd_err("\033[31mERROR: pwd failed\033[0m", fd);
+		return (print_fd_err("\033[31mERROR: pwd failed\033[0m", fd));
 	print_fd(path, fd);
 	print_fd("\033[32mSUCCESS: pwd", fd);
 	write(fd, "\0", 1);
 }
 
-void	cmd_mkdir(int fd, char *arg)
+void		cmd_mkdir(int fd, char *arg)
 {
 	if (!arg || ft_strlen(arg) == 0)
-		return print_fd_err("\033[31mERROR: mkdir failed, no path \
-		specified\033[0m", fd);
+	{
+		return (print_fd_err("\033[31mERROR: mkdir failed, no path \
+		specified\033[0m", fd));
+	}
 	ft_putstr("New dir: ");
 	ft_putendl(arg);
 	if (mkdir(arg, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1)
