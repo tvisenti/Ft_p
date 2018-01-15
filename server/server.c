@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 17:16:07 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/15 09:55:50 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,17 @@ void	get_cmd(char *buf, int fd, char *pwd)
 	ft_putendl(str);
 	if (ft_strncmp(str, "ls", 2) == 0 && ft_strlen(str) >= 2)
 		cmd_ls(fd, &str[3], pwd);
-	else if (ft_strncmp(str, "cd", 2) == 0 && ft_strlen(str) > 3 &&
-	str[2] == ' ')
+	else if (ft_strncmp(str, "cd ", 3) == 0 && ft_strlen(str) > 3)
 		cmd_cd(fd, &str[3], pwd);
+	else if (ft_strncmp(str, "get ", 4) == 0 && ft_strlen(str) > 4)
+		cmd_get_server(fd, &str[4]);
+	else if (ft_strncmp(str, "put ", 4) == 0 && ft_strlen(str) > 4)
+		cmd_put_server(fd, &str[4]);
 	else if (ft_strcmp(str, "quit") == 0 && ft_strlen(str) == 4)
 		return ;
 	else if (ft_strcmp(str, "pwd") == 0 && ft_strlen(str) == 3)
 		cmd_pwd(fd);
-	else if (ft_strncmp(str, "mkdir", 5) == 0 && ft_strlen(str) > 6 &&
-	str[5] == ' ')
+	else if (ft_strncmp(str, "mkdir ", 6) == 0 && ft_strlen(str) > 6)
 		cmd_mkdir(fd, &str[6]);
 	else
 		print_fd_err("\033[31mERROR: Command not found\033[0m", fd);

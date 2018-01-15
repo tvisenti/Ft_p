@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 17:11:03 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/15 18:00:32 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,29 @@
 # include <limits.h>
 # include "libft/inc/libft.h"
 
+/*
+** cmd_get_server
+*/
+
+int		cmd_get_server(int fd, char *buf);
+
+/*
+** cmd_put_server
+*/
+
+int		cmd_put_server(int fd, char *buf);
 
 /*
 ** cmd_get
 */
 
-void	cmd_get(int fd, char *buf);
+int		cmd_get_client(int fd, char *buf);
 
 /*
 ** cmd_put
 */
 
-void	cmd_put(int fd, char *buf);
+int		cmd_put_client(int fd, char *buf);
 
 /*
 ** display
@@ -77,5 +88,6 @@ void	usage(char *str);
 int		create_client(char *addr, int port);
 void	wait_user_input(int fd);
 void	read_client(int fd, char *buf);
+void	clear_fd(int fd);
 
 #endif

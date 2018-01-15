@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/12 17:11:29 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/15 17:42:09 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,23 @@ void	read_client(int fd, char *buf)
 	write(1, "$> ", 3);
 }
 
+void	clear_fd(int fd)
+{
+	int		r;
+	char	*buf;
+
+	buf = NULL;
+	ft_putendl("BEGIN");
+	while ((r = read(fd, buf, 1)) > 0 && buf[0] != '\0')
+	{
+		buf[r] = '\0';
+		ft_putendl("HERE");
+	}
+	ft_putendl("EXIT");
+	// write(fd, "\0", 1);
+	// write(1, "\0", 1);
+}
+
 void	wait_user_input(int fd)
 {
 	int		r;
@@ -58,9 +75,15 @@ void	wait_user_input(int fd)
 		if (ft_strcmp(buf, "quit") == 0)
 			return ;
 		else if (ft_strncmp(buf, "get ", 4) == 0 && ft_strlen(buf) > 4)
-			cmd_get(fd, buf);
+		{
+			if (cmd_get_client(fd, &buf[3]) == -1)
+				clear_fd(fd);
+		}
 		else if (ft_strncmp(buf, "put ", 4) == 0 && ft_strlen(buf) > 4)
-			cmd_put(fd, buf);
+		{
+			if (cmd_put_client(fd, &buf[3]) == -1)
+				clear_fd(fd);
+		}
 		else
 			read_client(fd, ft_strdup(buf));
 		ft_bzero(buf, ft_strlen(buf));
