@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 17:08:00 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/16 17:42:32 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int		accept_fork(unsigned int sock)
 	pid_t				pid;
 	int					sock_client;
 
+	ft_putendl("Waiting a client ...");
 	while (42)
 	{
 		if ((sock_client = accept(sock, (struct sockaddr*)&csin, &cslen)))
@@ -96,8 +97,10 @@ int		accept_fork(unsigned int sock)
 				return (print_error("Fork failed"));
 			else if (pid == 0)
 			{
+				ft_putendl("Hello, new client!");
 				handler_serv(sock_client);
 				close(sock_client);
+				ft_putendl("Goodbye, ex-client!");
 				break ;
 			}
 		}

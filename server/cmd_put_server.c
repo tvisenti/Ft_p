@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 09:44:36 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/15 18:03:42 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/16 17:43:48 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static int		recv_put_server(int fd, int file, int size_max)
 			break ;
 		ret += size;
 	}
-	write(file, buff, size_max);
+	write(file, buff, size + ret);
+	write(file, "\0", 1);
 	return (1);
 }
 
@@ -59,7 +60,7 @@ static int		get_size_file(int fd)
 		if (size < 1)
 		{
 			free(line);
-			return (print_error("get, filesize is < 1"));
+			return (print_error("get, file doesn't exist"));
 		}
 		free(line);
 	}
