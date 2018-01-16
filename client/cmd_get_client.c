@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/15 18:01:21 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/16 17:02:58 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int		get_size_file(int fd)
 		if (size < 1)
 		{
 			free(line);
-			return (print_error("get, filesize is < 1"));
+			return (print_error("get, filesize doesen't exist"));
 		}
 		free(line);
 	}
@@ -81,7 +81,6 @@ int			cmd_get_client(int fd, char *buf)
 		return (-1);
 	ft_putendl("\033[32mSUCCESS: get\033[0m");
 	ft_putstr("$> ");
-	clear_fd(file);
 	close(file);
 	return (1);
 }

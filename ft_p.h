@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/15 18:00:32 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/16 17:08:44 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		print_error(char *str);
 ** server
 */
 
-void	get_cmd(char *buf, int fd, char *pwd);
+int		get_cmd(char *buf, int fd, char *pwd);
 int     create_server(int port);
 void    handler_serv(int fd);
 int     accept_fork(unsigned int sock);

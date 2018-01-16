@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/15 09:55:50 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/16 17:08:00 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		create_server(int port)
 	return (sock);
 }
 
-void	get_cmd(char *buf, int fd, char *pwd)
+int		get_cmd(char *buf, int fd, char *pwd)
 {
 	char	*str;
 
@@ -52,7 +52,7 @@ void	get_cmd(char *buf, int fd, char *pwd)
 	else if (ft_strncmp(str, "put ", 4) == 0 && ft_strlen(str) > 4)
 		cmd_put_server(fd, &str[4]);
 	else if (ft_strcmp(str, "quit") == 0 && ft_strlen(str) == 4)
-		return ;
+		return (-1);
 	else if (ft_strcmp(str, "pwd") == 0 && ft_strlen(str) == 3)
 		cmd_pwd(fd);
 	else if (ft_strncmp(str, "mkdir ", 6) == 0 && ft_strlen(str) > 6)
@@ -60,6 +60,7 @@ void	get_cmd(char *buf, int fd, char *pwd)
 	else
 		print_fd_err("\033[31mERROR: Command not found\033[0m", fd);
 	free(str);
+	return (1);
 }
 
 void	handler_serv(int fd)
@@ -72,7 +73,10 @@ void	handler_serv(int fd)
 	while (42)
 	{
 		if (get_next_line(fd, &buf) > 0)
-			get_cmd(buf, fd, pwd);
+		{
+			if (get_cmd(buf, fd, pwd) == -1)
+				return ;
+		}
 	}
 }
 
