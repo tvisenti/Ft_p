@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 17:03:53 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/16 17:14:50 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		open_file(char *buf)
 
 	filename = ft_strtrim(buf);
 	if ((file = open(filename, O_RDONLY)) == -1)
-		return (print_error("put, open returns -1"));
+		return (-1);
 	return (file);
 }
 
@@ -46,7 +46,7 @@ int			cmd_put_client(int fd, char *buf)
 	void		*ptr;
 
 	if ((file = open_file(buf)) == -1)
-		return (-1);
+		return (print_error("put, open returns -1"));
 	if ((fstat(file, &st)) == -1)
 		return (print_error("put, fstat returns -1"));
 	if ((ptr = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, file, 0)) 
