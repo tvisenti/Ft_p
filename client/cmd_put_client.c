@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/15 17:59:51 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/16 14:12:26 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		open_file(char *buf)
 
 	filename = ft_strtrim(buf);
 	if ((file = open(filename, O_RDONLY)) == -1)
-		return (print_error("pet, open returns -1"));
+		return (print_error("get, open returns -1"));
 	return (file);
 }
 
@@ -55,7 +55,7 @@ int			cmd_put_client(int fd, char *buf)
 	if (send_put_client(st, fd, ptr, file) == -1)
 		return (print_error("get, fail to send"));
 	ft_putendl("\033[32mSUCCESS: put\033[0m");
-	write(fd, "\0$> ", 4);
+	ft_putstr("$> ");
 	return (1);
 }
 
