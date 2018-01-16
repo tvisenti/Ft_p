@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 17:14:50 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/16 17:52:57 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int		open_file(char *buf)
 
 	filename = ft_strtrim(buf);
 	if ((file = open(filename, O_RDONLY)) == -1)
-		return (-1);
+		return (print_error("get, open returns -1"));
 	return (file);
 }
 

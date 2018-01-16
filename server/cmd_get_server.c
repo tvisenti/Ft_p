@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 09:43:50 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 17:05:42 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/16 17:52:49 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ static int		send_get_server(struct stat st, int fd, void *ptr, int file)
 	return (1);
 }
 
-int			cmd_get_server(int fd, char *buf)
+void			cmd_get_server(int fd, char *buf)
 {
 	int			file;
 	struct stat	st;
 	void		*ptr;
 
 	if ((file = open_file(buf)) == -1)
-		return (-1);
+		return (print_fd_err("\033[31mERROR: get, open returns -1\033[0m", fd));
 	if ((fstat(file, &st)) == -1)
 		return (-1);
 	if ((ptr = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, file, 0))

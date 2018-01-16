@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 17:43:49 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/16 17:52:55 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int		open_file(char *cmd, int fd)
 	int			file;
 
 	filename = ft_strtrim(cmd);
-	if ((file = open(filename, O_WRONLY | O_CREAT | O_EXCL,
-		S_IRWXU | S_IRGRP | S_IROTH)) == -1)
+	if ((file = open(filename, O_WRONLY | O_CREAT | O_EXCL | O_TRUNC,
+		S_IRWXU | S_IRGRP | S_IROTH) == -1))
 		return (print_error("get, can't open this file"));
 	free(filename);
 	return (file);
@@ -55,7 +55,6 @@ static int		get_size_file(int fd)
 	size = 0;
 	if (get_next_line(fd, &line) == 1)
 	{
-		ft_putendl(line);
 		size = ft_atoi(line);
 		if (size < 1)
 		{
@@ -69,17 +68,24 @@ static int		get_size_file(int fd)
 	return (size);
 }
 
+static int		close_file(int file)
+{
+	ft_putstr("$> ");
+	// close(file);
+	return (-1);
+}
+
 int			cmd_get_client(int fd, char *buf)
 {
 	int			file;
 	int			size;
 
 	if ((file = open_file(buf, fd)) == -1)
-		return (-1);
+		return (close_file(file));
 	if ((size = get_size_file(fd)) == -1)
-		return (-1);
+		return (close_file(file));
 	if (recv_get_client(fd, file, size) == -1)
-		return (-1);
+		return (close_file(file));
 	ft_putendl("\033[32mSUCCESS: get\033[0m");
 	ft_putstr("$> ");
 	close(file);
