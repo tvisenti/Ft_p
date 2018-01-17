@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/17 17:04:27 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 17:09:58 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 ** cmd_get_server
 */
 
-void	cmd_get_server(int fd, char *buf);
+int		cmd_get_server(int fd, char *buf);
 
 /*
 ** cmd_put_server
@@ -97,6 +97,6 @@ void	usage(char *str);
 int		create_client(char *addr, int port);
 void	wait_user_input(int fd);
 void	read_client(int fd, char *buf);
-void	clear_fd(int fd, char *buf);
+void	clear_fd(int fd);
 
 #endif

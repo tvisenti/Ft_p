@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 09:43:50 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/17 17:04:27 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 17:10:29 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int		send_get_server(struct stat st, int fd, void *ptr, int file)
 	return (1);
 }
 
-void			cmd_get_server(int fd, char *buf)
+int			cmd_get_server(int fd, char *buf)
 {
 	int			file;
 	struct stat	st;
