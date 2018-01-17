@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 17:08:00 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 10:33:30 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ int		create_server(int port)
 	if (!proto)
 		return (-1);
 	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
+	ft_memset((void *)&sin, 0, sizeof(sin));
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
 	sin.sin_addr.s_addr = htonl(INADDR_ANY);
 	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)) == -1)
-		return (print_error("Bind failed"));
-	listen(sock, 42);
+		return (print_error("bind failed"));
+	if (listen(sock, 42) == -1)
+		return (print_error("listen failed"));
 	return (sock);
 }
 
@@ -75,36 +77,39 @@ void	handler_serv(int fd)
 		if (get_next_line(fd, &buf) > 0)
 		{
 			if (get_cmd(buf, fd, pwd) == -1)
-				return ;
+				break ;
 		}
+		else
+			break ;
 	}
+	free(pwd);
+	close(fd);
 }
 
 int		accept_fork(unsigned int sock)
 {
-	int					cs;
-	struct sockaddr_in	*csin;
-	unsigned int		cslen;
 	pid_t				pid;
 	int					sock_client;
 
+	ft_putendl("Waiting a client ...");
 	while (42)
 	{
-		if ((sock_client = accept(sock, (struct sockaddr*)&csin, &cslen)))
+		if ((sock_client = accept(sock, (struct sockaddr*)NULL, NULL)))
 		{
 			if ((pid = fork()) == -1)
 				return (print_error("Fork failed"));
 			else if (pid == 0)
 			{
+				ft_putendl("Hello new client!");
 				handler_serv(sock_client);
-				close(sock_client);
+				ft_putendl("Goodbye ex-client!");
 				break ;
 			}
 		}
 		else
 			return (print_error("Accept failed"));
 	}
-	close(cs);
+	close(sock_client);
 	return (1);
 }
 

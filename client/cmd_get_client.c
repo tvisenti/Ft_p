@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 17:02:58 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 10:22:37 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int		open_file(char *cmd, int fd)
 	filename = ft_strtrim(cmd);
 	if ((file = open(filename, O_WRONLY | O_CREAT | O_EXCL,
 		S_IRWXU | S_IRGRP | S_IROTH)) == -1)
-		return (print_error("get, can't open this file"));
+		return (-1);
 	free(filename);
 	return (file);
 }
@@ -59,7 +59,7 @@ static int		get_size_file(int fd)
 		if (size < 1)
 		{
 			free(line);
-			return (print_error("get, filesize doesen't exist"));
+			return (-1);
 		}
 		free(line);
 	}
@@ -74,11 +74,11 @@ int			cmd_get_client(int fd, char *buf)
 	int			size;
 
 	if ((file = open_file(buf, fd)) == -1)
-		return (-1);
+		return (print_error("get, can't open this file"));
 	if ((size = get_size_file(fd)) == -1)
-		return (-1);
+		return (print_error("get, file doesn't exist"));
 	if (recv_get_client(fd, file, size) == -1)
-		return (-1);
+		return (print_error("get, recv failed"));
 	ft_putendl("\033[32mSUCCESS: get\033[0m");
 	ft_putstr("$> ");
 	close(file);
