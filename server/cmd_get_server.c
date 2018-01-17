@@ -6,23 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 09:43:50 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/17 11:12:51 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 14:37:57 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_p.h"
-
-static int		open_file(char *buf)
-{
-	char		*filename;
-	int			file;
-
-	filename = ft_strtrim(buf);
-	if ((file = open(filename, O_RDONLY)) == -1)
-		return (-1);
-	free(filename);
-	return (file);
-}
 
 static int		send_get_server(struct stat st, int fd, void *ptr)
 {
@@ -44,16 +32,16 @@ int			cmd_get_server(int fd, char *buf)
 	struct stat	st;
 	void		*ptr;
 
-	if ((file = open_file(buf)) == -1)
-		return (print_error("get, open returns -1"));
+	if ((file = open_file_read(buf)) == -1)
+		return (print_fd_err_int("get [server], open returns -1", fd));
 	if ((fstat(file, &st)) == -1)
-		return (print_error("put, fstat returns -1"));
+		return (print_fd_err_int("get [server], fstat returns -1", fd));
 	if ((ptr = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, file, 0))
 	== MAP_FAILED)
-		return (print_error("put, mmap returns -1"));
+		return (print_fd_err_int("get [server], mmap returns -1", fd));
 	if (send_get_server(st, fd, ptr) == -1)
-		return (print_error("get, fail to send"));
-	ft_putendl("\033[32mSUCCESS: get\033[0m");
+		return (print_fd_err_int("get [server], fail to send", fd));
+	ft_putendl("\033[32mSUCCESS: get [server]\033[0m");
 	close(file);
 	return (1);
 }

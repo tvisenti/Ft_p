@@ -6,22 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/17 10:16:17 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 14:37:35 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_p.h"
-
-static int		open_file(char *buf)
-{
-	char		*filename;
-	int			file;
-
-	filename = ft_strtrim(buf);
-	if ((file = open(filename, O_RDONLY)) == -1)
-		return (-1);
-	return (file);
-}
 
 static int		send_put_client(struct stat st, int fd, void *ptr, int file)
 {
@@ -45,7 +34,7 @@ int			cmd_put_client(int fd, char *buf)
 	struct stat	st;
 	void		*ptr;
 
-	if ((file = open_file(buf)) == -1)
+	if ((file = open_file_read(buf)) == -1)
 		return (print_error("put, open returns -1"));
 	if ((fstat(file, &st)) == -1)
 		return (print_error("put, fstat returns -1"));
