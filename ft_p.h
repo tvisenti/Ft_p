@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 17:52:52 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 17:04:27 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,19 @@ int		cmd_get_client(int fd, char *buf);
 int		cmd_put_client(int fd, char *buf);
 
 /*
+** handle_file
+*/
+
+int		open_file(char *cmd);
+int		open_file_read(char *cmd);
+int		get_size_file(int fd);
+
+/*
 ** display
 */
 
 void    usage(char *str);
+int		print_fd_err_int(char *str, int fd);
 void	print_fd_err(char *str, int fd);
 void	print_fd(char *str, int fd);
 int		print_error(char *str);

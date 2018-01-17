@@ -6,22 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 17:52:57 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 17:04:27 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_p.h"
-
-static int		open_file(char *buf)
-{
-	char		*filename;
-	int			file;
-
-	filename = ft_strtrim(buf);
-	if ((file = open(filename, O_RDONLY)) == -1)
-		return (print_error("get, open returns -1"));
-	return (file);
-}
 
 static int		send_put_client(struct stat st, int fd, void *ptr, int file)
 {
@@ -45,17 +34,18 @@ int			cmd_put_client(int fd, char *buf)
 	struct stat	st;
 	void		*ptr;
 
-	if ((file = open_file(buf)) == -1)
-		return (print_error("put, open returns -1"));
+	if ((file = open_file_read(buf)) == -1)
+		return (print_error("put [client], open returns -1"));
 	if ((fstat(file, &st)) == -1)
-		return (print_error("put, fstat returns -1"));
+		return (print_error("put [client], fstat returns -1"));
 	if ((ptr = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, file, 0)) 
 	== MAP_FAILED)
-		return (print_error("put, mmap returns -1"));
+		return (print_error("put [client], mmap returns -1"));
 	if (send_put_client(st, fd, ptr, file) == -1)
-		return (print_error("get, fail to send"));
+		return (print_error("put [client], fail to send"));
 	ft_putendl("\033[32mSUCCESS: put\033[0m");
 	ft_putstr("$> ");
+	close(file);
 	return (1);
 }
 

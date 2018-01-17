@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 17:53:29 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 17:04:27 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,45 @@ void	read_client(int fd, char *buf)
 	write(1, "$> ", 3);
 }
 
+int		get_size(int fd)
+{
+	int			size;
+	char		*line;
+
+	size = 0;
+	if (get_next_line(fd, &line) == 1)
+	{
+		size = ft_atoi(line);
+		if (size < 1)
+			return (-1);
+	}
+	else
+		return (-1);
+	return (size);
+}
+
+void	clear_buf(int fd)
+{
+	char		*buf;
+	int			size_max;
+	int			size;
+	int			ret;
+
+	ret = 0;
+	size_max = get_size(fd);
+	if (!(buf = malloc(sizeof(char) * 4096)))
+		return ;
+	ft_bzero(buf, 4096);
+	while (ret < size_max)
+	{
+		size = read(fd, buf + ret, 4096);
+		if (size % 4096 != 0)
+			break ;
+		ret += size;
+	}
+	ft_putstr("$> ");
+}
+
 void	wait_user_input(int fd)
 {
 	int		r;
@@ -58,7 +97,10 @@ void	wait_user_input(int fd)
 		if (ft_strcmp(buf, "quit") == 0)
 			return ;
 		else if (ft_strncmp(buf, "get ", 4) == 0 && ft_strlen(buf) > 4)
-			cmd_get_client(fd, &buf[3]);
+		{
+			if (cmd_get_client(fd, &buf[3]) == -1)
+				clear_buf(fd);
+		}
 		else if (ft_strncmp(buf, "put ", 4) == 0 && ft_strlen(buf) > 4)
 			cmd_put_client(fd, &buf[3]);
 		else
