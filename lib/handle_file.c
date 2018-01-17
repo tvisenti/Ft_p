@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/17 13:07:12 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/17 14:36:22 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 16:27:38 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		get_size_file(int fd)
 		if (size < 1)
 		{
 			free(line);
+			ft_putendl_fd("-1", fd);
 			return (-1);
 		}
 		free(line);

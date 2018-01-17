@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/17 14:28:19 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/17 16:27:55 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,18 @@ int		get_size(int fd)
 	return (size);
 }
 
-void	clear_buf(int fd, char *buf)
+void	clear_buf(int fd)
 {
+	char		*buf;
 	int			size_max;
 	int			size;
 	int			ret;
 
 	ret = 0;
 	size_max = get_size(fd);
-	if (size_max < 0)
-		ft_putendl("ERROR");
+	if (!(buf = malloc(sizeof(char) * 4096)))
+		return ;
+	ft_bzero(buf, 4096);
 	while (ret < size_max)
 	{
 		size = read(fd, buf + ret, 4096);
@@ -97,7 +99,7 @@ void	wait_user_input(int fd)
 		else if (ft_strncmp(buf, "get ", 4) == 0 && ft_strlen(buf) > 4)
 		{
 			if (cmd_get_client(fd, &buf[3]) == -1)
-				clear_buf(fd, buf);
+				clear_buf(fd);
 		}
 		else if (ft_strncmp(buf, "put ", 4) == 0 && ft_strlen(buf) > 4)
 			cmd_put_client(fd, &buf[3]);
