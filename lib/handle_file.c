@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/17 13:07:12 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/17 16:27:38 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/18 15:56:00 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int		open_file(char *cmd)
 	int			file;
 
 	filename = ft_strtrim(cmd);
-	file = open(filename, O_WRONLY | O_CREAT | O_EXCL,
-		S_IRWXU | S_IRGRP | S_IROTH);
+	file = open(filename, O_WRONLY | O_CREAT | O_TRUNC,
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
 	free(filename);
 	return (file);
 }
