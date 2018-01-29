@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/29 17:53:10 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/29 18:15:38 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		open_file_put_client(char *cmd, int fd)
 	return (file);
 }
 
-static void		run_put_client(struct stat st, int client, void *ptr, int file)
+static void		send_put_client(struct stat st, int client, void *ptr, int file)
 {
 	char		*size;
 
@@ -59,7 +59,7 @@ void			cmd_put_client(int fd, char *buf)
 			== MAP_FAILED)
 		return (print_fd_err("mmap() failed", fd));
 	ft_putendl_fd("TEST_OK", fd);
-	run_put_client(st, fd, ptr, fd);
+	send_put_client(st, fd, ptr, fd);
 }
 
 
