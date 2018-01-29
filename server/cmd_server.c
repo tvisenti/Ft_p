@@ -6,51 +6,42 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 11:24:35 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/16 10:18:00 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/29 11:03:50 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_p.h"
 
-int			check_permissions(int fd, char *absolute_path, char *arg, int ls)
+int			check_permissions(int fd, char *absolute_path, char *arg)
 {
 	char	path[UCHAR_MAX];
 
 	getcwd(path, UCHAR_MAX);
-	if (ft_strncmp(absolute_path, path, ft_strlen(absolute_path)) != 0 ||
-	((ls == 1) && (ft_strncmp(arg, "..", 4) == 0)) ||
-	((ls == 1) && (arg[0] == '/') &&
-	(ft_strncmp(arg, absolute_path, ft_strlen(absolute_path)) != 0)))
+	if (ft_strncmp(absolute_path, path, ft_strlen(absolute_path)) != 0)
 	{
-		if (ls == 0)
-		{
-			chdir(absolute_path);
-			print_fd_err("\033[31mERROR: cd, no permissions \
-			to access here\033[0m", fd);
-		}
-		else
-			print_fd_err("\033[31mERROR: ls, no permissions \
-			to access here\033[0m", fd);
+		chdir(absolute_path);
+		print_fd_err("\033[31mERROR: cd, no permissions to access here\033[0m",
+		fd);
 		return (0);
 	}
 	return (1);
 }
 
-void		cmd_ls(int fd, char *arg, char *absolute_path)
+void		cmd_ls(int fd, char *arg)
 {
+	char			*open;
 	DIR				*dir;
 	struct dirent	*file;
 	char			*name;
 
-	if (ft_strlen(arg) == 0 || !arg)
-		arg = ft_strdup(".");
-	if (!(dir = opendir(arg)))
+	open = ft_strdup(open);
+	if (ft_strlen(arg) == 0 || !arg || arg[0] == '\n' || arg[0] == '\0')
+		open = ft_strdup(".");
+	if (!(dir = opendir(open)))
 	{
-		return (print_fd_err("\033[31mERROR: ls, can't access to \
-		this dir\033[0m", fd));
+		return(print_fd_err(\
+			"\033[31mERROR: ls, can't access to this dir\033[0m", fd));
 	}
-	if (check_permissions(fd, absolute_path, arg, 1) == 0)
-		return ;
 	while ((file = readdir(dir)))
 	{
 		name = file->d_name;
@@ -75,7 +66,7 @@ void		cmd_cd(int fd, char *arg, char *absolute_path)
 	}
 	if ((ret = chdir(dir)) == -1)
 		return (print_fd_err("\033[31mERROR: cd, chdir failed\033[0m", fd));
-	if (check_permissions(fd, absolute_path, arg, 0) == 0)
+	if (check_permissions(fd, absolute_path, arg) == 0)
 		return ;
 	print_fd("\033[32mSUCCESS: cd\033[0m", fd);
 	write(fd, "\0", 1);

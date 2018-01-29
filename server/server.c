@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/17 17:04:27 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/29 11:04:10 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,12 @@ int		create_server(int port)
 	return (sock);
 }
 
-int		get_cmd(char *buf, int fd, char *pwd)
+int		get_cmd(char *str, int fd, char *pwd)
 {
-	char	*str;
-
-	str = ft_strdup(buf);
 	ft_putstr("$> ");
 	ft_putendl(str);
 	if (ft_strncmp(str, "ls", 2) == 0 && ft_strlen(str) >= 2)
-		cmd_ls(fd, &str[3], pwd);
+		cmd_ls(fd, &str[3]);
 	else if (ft_strncmp(str, "cd ", 3) == 0 && ft_strlen(str) > 3)
 		cmd_cd(fd, &str[3], pwd);
 	else if (ft_strncmp(str, "get ", 4) == 0 && ft_strlen(str) > 4)
@@ -61,7 +58,6 @@ int		get_cmd(char *buf, int fd, char *pwd)
 		cmd_mkdir(fd, &str[6]);
 	else
 		print_fd_err("\033[31mERROR: Command not found\033[0m", fd);
-	free(str);
 	return (1);
 }
 
@@ -81,6 +77,7 @@ void	handler_serv(int fd)
 		}
 		else
 			break ;
+		free(buf);
 	}
 	free(pwd);
 	close(fd);
