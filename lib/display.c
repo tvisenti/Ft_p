@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:10:41 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/17 17:04:27 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/29 15:23:52 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@ void	usage(char *str)
 	ft_putstr(str);
 	ft_putendl(" <addr> <port>\n");
 	exit(-1);
+}
+
+void		print_error_get_put(char *str)
+{
+	ft_putstr("\033[31mERROR: ");
+	ft_putstr(str);
+	ft_putendl("\033[0m");
+	ft_putstr("$> ");
+	return ;
 }
 
 int		print_fd_err_int(char *str, int fd)

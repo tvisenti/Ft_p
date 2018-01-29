@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/29 11:01:01 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/29 15:30:10 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,34 @@
 ** cmd_get_server
 */
 
-int		cmd_get_server(int fd, char *buf);
+void	cmd_get_server(int fd, char *buf);
 
 /*
 ** cmd_put_server
 */
 
-int		cmd_put_server(int fd, char *buf);
+void	cmd_put_server(int fd, char *buf);
 
 /*
 ** cmd_get
 */
 
-int		cmd_get_client(int fd, char *buf);
+void	cmd_get_client(int fd, char *buf);
 
 /*
 ** cmd_put
 */
 
-int		cmd_put_client(int fd, char *buf);
+void	cmd_put_client(int fd, char *buf);
 
 /*
 ** handle_file
 */
 
-int		open_file(char *cmd);
-int		open_file_read(char *cmd);
+int		open_file(char *cmd, int fd);
+int		open_file_read(char *cmd, int fd);
 int		get_size_file(int fd);
+int		recv_alert(char *str, int fd);
 
 /*
 ** display
@@ -69,6 +70,7 @@ int		print_fd_err_int(char *str, int fd);
 void	print_fd_err(char *str, int fd);
 void	print_fd(char *str, int fd);
 int		print_error(char *str);
+void	print_error_get_put(char *str);
 
 /*
 ** server
@@ -97,6 +99,5 @@ void	usage(char *str);
 int		create_client(char *addr, int port);
 void	wait_user_input(int fd);
 void	read_client(int fd, char *buf);
-void	clear_fd(int fd);
 
 #endif
