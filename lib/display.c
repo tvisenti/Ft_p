@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:10:41 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 15:56:39 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 17:26:38 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,13 @@ int		print_fd_err_int(char *str, int fd)
 
 void	print_fd_err(char *str, int fd)
 {
-	ft_putendl(str);
-	ft_putendl_fd(str, fd);
+	ft_putstr("\033[31mERROR: ");
+	ft_putstr(str);
+	ft_putendl("\033[0m");
+
+	ft_putstr_fd("\033[31mERROR: ", fd);
+	ft_putstr_fd(str, fd);
+	ft_putendl_fd("\033[0m", fd);
 	write(fd, "\0", 1);
 	return ;
 }

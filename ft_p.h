@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 17:10:07 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 17:27:11 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int		recv_alert(char *str, int fd);
 ** display
 */
 
-void	usage(char *str);
-int		print_fd_err_int(char *str, int fd);
 void	print_fd_err(char *str, int fd);
 void	print_fd(char *str, int fd);
 int		print_error(char *str);
