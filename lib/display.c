@@ -6,19 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:10:41 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 11:12:18 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:56:39 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_p.h"
-
-void	usage(char *str)
-{
-	ft_putstr("Usage: ");
-	ft_putstr(str);
-	ft_putendl(" <addr> <port>\n");
-	exit(-1);
-}
 
 void		print_error_get_put(char *str)
 {
