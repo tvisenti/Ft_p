@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 10:31:07 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 10:54:37 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void			cmd_get_client(int fd, char *buf)
 	if (recv_alert("TEST_OK", fd) < 1)
 		return (print_error_get_put("mmap() server side failed"));
 	if ((size = size_file(fd)) == -1)
-		return (print_error_get_put("can't send size from client side"));
+		return (print_error_get_put("Can't send size from client side"));
 	recv_get_client(fd, file, size);
 	ft_putendl_fd("SUCCESS", fd);
 	get_next(fd);
