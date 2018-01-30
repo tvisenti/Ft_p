@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/29 15:28:43 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:53:04 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,33 +45,16 @@ void	read_client(int fd, char *buf)
 	write(1, "$> ", 3);
 }
 
-int		get_size(int fd)
-{
-	int			size;
-	char		*line;
-
-	size = 0;
-	if (get_next_line(fd, &line) == 1)
-	{
-		size = ft_atoi(line);
-		if (size < 1)
-			return (-1);
-	}
-	else
-		return (-1);
-	return (size);
-}
-
 void	wait_user_input(int fd)
 {
 	int		r;
 	char	*buf;
 
 	write(1, "$> ", 3);
+	buf = NULL;
 	while ((r = get_next_line(0, &buf)) > 0)
 	{
 		ft_putendl_fd(buf, fd);
-		write(fd, "\0", 1);
 		if (ft_strcmp(buf, "quit") == 0)
 			return ;
 		else if (ft_strncmp(buf, "get ", 4) == 0 && ft_strlen(buf) > 4)
@@ -80,7 +63,7 @@ void	wait_user_input(int fd)
 			cmd_put_client(fd, &buf[3]);
 		else
 			read_client(fd, ft_strdup(buf));
-		ft_bzero(buf, ft_strlen(buf));
+		free(buf);
 	}
 }
 
@@ -90,7 +73,12 @@ int		main(int ac, char **av)
 	int	sock;
 
 	if (ac != 3)
-		usage(av[0]);
+	{
+		ft_putstr("Usage: ");
+		ft_putstr(av[0]);
+		ft_putendl(" <addr> <port>\n");
+		return (-1);
+	}
 	port = atoi(av[2]);
 	sock = create_client(av[1], port);
 	wait_user_input(sock);

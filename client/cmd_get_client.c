@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 10:54:37 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:51:11 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void		get_next(int fd)
 {
 	char		*line;
 
-	if (ft_get_next_line(fd, &line) == 1)
+	if (get_next_line(fd, &line) == 1)
 	{
 		ft_putendl(line);
 		free(line);
