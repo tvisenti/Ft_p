@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 15:57:48 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:42:55 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	handler_serv(int fd)
 	close(fd);
 }
 
-int		accept_fork(unsigned int sock)
+int		accept_fork(int sock)
 {
 	pid_t				pid;
 	int					sock_client;
@@ -113,7 +113,7 @@ int		accept_fork(unsigned int sock)
 int		main(int ac, char **av)
 {
 	int				port;
-	unsigned int	sock;
+	int				sock;
 
 	if (ac != 2)
 	{

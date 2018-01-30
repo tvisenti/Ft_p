@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/28 10:56:39 by tvisenti          #+#    #+#              #
-#    Updated: 2018/01/11 11:47:17 by tvisenti         ###   ########.fr        #
+#    Updated: 2018/01/30 17:07:29 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,7 @@ LIB_NAME =	ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 			ft_putstr.c ft_putendl.c ft_putnbr.c ft_putchar_fd.c ft_swap.c \
 			ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_strrev.c \
 			ft_str_delwhite.c ft_isupper.c ft_islower.c ft_lstadd.c \
-			ft_strocpy.c get_next_line.c ft_putstrn.c ft_itoa_base.c \
-			ft_get_next_line.c
+			ft_strocpy.c get_next_line.c ft_putstrn.c ft_itoa_base.c
 
 OBJLIB_NAME = $(LIB_NAME:.c=.o)
 

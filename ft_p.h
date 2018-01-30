@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/29 15:30:10 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 17:10:07 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		recv_alert(char *str, int fd);
 ** display
 */
 
-void    usage(char *str);
+void	usage(char *str);
 int		print_fd_err_int(char *str, int fd);
 void	print_fd_err(char *str, int fd);
 void	print_fd(char *str, int fd);
@@ -77,15 +77,15 @@ void	print_error_get_put(char *str);
 */
 
 int		get_cmd(char *str, int fd, char *pwd);
-int     create_server(int port);
-void    handler_serv(int fd);
-int     accept_fork(unsigned int sock);
+int		create_server(int port);
+void	handler_serv(int fd);
+int		accept_fork(int sock);
 
 /*
 ** cmd_server
 */
 
-int		check_permissions(int fd, char *absolute_path, char *arg);
+int		check_permissions(int fd, char *absolute_path);
 void	cmd_ls(int fd, char *arg);
 void	cmd_cd(int fd, char *arg, char *absolute_path);
 void	cmd_pwd(int fd);

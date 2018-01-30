@@ -6,13 +6,13 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 11:24:35 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 16:06:29 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 16:43:45 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_p.h"
 
-int			check_permissions(int fd, char *absolute_path, char *arg)
+int			check_permissions(int fd, char *absolute_path)
 {
 	char	path[UCHAR_MAX];
 
@@ -69,7 +69,7 @@ void		cmd_cd(int fd, char *arg, char *absolute_path)
 	}
 	if ((ret = chdir(dir)) == -1)
 		return (print_fd_err("\033[31mERROR: cd, chdir failed\033[0m", fd));
-	if (check_permissions(fd, absolute_path, arg) == 0)
+	if (check_permissions(fd, absolute_path) == 0)
 		return ;
 	print_fd("\033[32mSUCCESS: cd\033[0m", fd);
 	write(fd, "\0", 1);
