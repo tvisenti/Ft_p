@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 11:24:35 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 10:34:44 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:48:23 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void		cmd_ls(int fd, char *arg)
 
 	open = ft_strdup(arg);
 	if (ft_strlen(arg) == 0 || !arg || arg[0] == '\n' || arg[0] == '\0')
+	{
+		free(open);
 		open = ft_strdup(".");
+	}
 	if (!(dir = opendir(open)))
 	{
 		return(print_fd_err(\

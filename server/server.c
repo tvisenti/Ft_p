@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 11:54:22 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:57:48 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,12 @@ int		main(int ac, char **av)
 	unsigned int	sock;
 
 	if (ac != 2)
-		usage(av[0]);
+	{
+		ft_putstr("Usage: ");
+		ft_putstr(av[0]);
+		ft_putendl(" <addr> <port>\n");
+		return (-1);
+	}
 	port = atoi(av[1]);
 	if ((sock = create_server(port)) == -1)
 		return (-1);

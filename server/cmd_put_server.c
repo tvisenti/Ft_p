@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 09:44:36 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 11:57:36 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:55:55 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int			open_file_put_server(char *cmd, int fd)
 	return (file);
 }
 
-static int			recv_put_server(int fd, int file, int size_max)
+static void			recv_put_server(int fd, int file, int size_max)
 {
 	char			*buff;
 	int				size;
@@ -37,7 +37,7 @@ static int			recv_put_server(int fd, int file, int size_max)
 
 	n = 0;
 	if (!(buff = malloc(sizeof(char) * size_max)))
-		return (-1);
+		return ;
 	while (n < size_max)
 	{
 		size = recv(fd, buff + n, 4096, 0);
@@ -47,7 +47,6 @@ static int			recv_put_server(int fd, int file, int size_max)
 	}
 	write(file, buff, size_max);
 	close(file);
-	return (1);
 }
 
 static int			size_file(int fd)

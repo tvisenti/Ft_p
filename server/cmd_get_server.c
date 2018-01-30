@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 09:43:50 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 10:28:29 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 15:56:14 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void			cmd_get_server(int fd, char *buf)
 	}
 	ft_putendl_fd("TEST_OK", fd);
 	send_get_server(fd, st, ptr);
+	close(file);
 }
 
 
