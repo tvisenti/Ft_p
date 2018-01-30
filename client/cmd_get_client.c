@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/29 18:18:05 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/30 10:31:07 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,9 @@ static int		open_file_get_client(char *cmd, int fd)
 	filename = cmd;
 	while (*filename == ' ')
 		++filename;
-	if ((file = open(filename, O_WRONLY | O_CREAT,
+	if ((file = open(filename, O_WRONLY | O_CREAT | O_EXCL,
 		S_IRWXU | S_IRGRP | S_IROTH)) == -1)
-	{
-		print_error_get_put("Can't create the file, already exists");
 		ft_putendl_fd("ERROR_FD", fd);
-	}
 	else
 		ft_putendl_fd("VERIF_FD", fd);
 	return (file);
@@ -93,13 +90,13 @@ void			cmd_get_client(int fd, char *buf)
 	int			size;
 
 	if (recv_alert("SERVER_OK", fd) < 1)
-		return (print_error_get_put("open() failed"));
+		return (print_error_get_put("open() server side failed"));
 	if ((file = open_file_get_client(buf, fd)) == -1)
-		return ;
+		return (print_error_get_put("Can't create the file, already exists"));
 	if (recv_alert("TEST_OK", fd) < 1)
-		return (print_error_get_put("mmap() failed"));
+		return (print_error_get_put("mmap() server side failed"));
 	if ((size = size_file(fd)) == -1)
-		return ;
+		return (print_error_get_put("can't send size from client side"));
 	recv_get_client(fd, file, size);
 	ft_putendl_fd("SUCCESS", fd);
 	get_next(fd);
