@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/30 16:33:21 by tvisenti          #+#    #+#              #
-#    Updated: 2018/01/30 17:09:05 by tvisenti         ###   ########.fr        #
+#    Updated: 2018/01/31 10:47:30 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_S = server.c \
 		cmd_get_server.c \
 
 SRC_C =	client.c \
+		cmd_client.c \
 		cmd_put_client.c \
 		cmd_get_client.c \
 
@@ -83,7 +84,7 @@ norme:
 	@echo "\n"----------------------- NORMINETTE LIBFT --------------------------"\n"
 	@norminette libft/lib/*.c libft/ft_printf/src/*.c libft/ft_printf/lib/*.c libft/inc/*.h
 	@echo "\n"------------------------ NORMINETTE FT_P --------------------------"\n"
-	@norminette client_src/*.c server_src/*.c ./*.h
+	@norminette client_src/*.c server_src/*.c inc/*.h
 	@echo "\n"--------------------------- END -----------------------------------"\n"
 
 .PHONY: re fclean clean all norme

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 10:06:24 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 10:40:42 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,4 @@ void			cmd_get_client(int fd, char *buf)
 	ft_putendl_fd("SUCCESS", fd);
 	get_next(fd);
 	close(file);
-	ft_putstr("$> ");
 }

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 10:07:31 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 10:43:52 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ int		get_cmd(char *str, int fd, char *pwd)
 		cmd_pwd(fd);
 	else if (ft_strncmp(str, "mkdir ", 6) == 0 && ft_strlen(str) > 6)
 		cmd_mkdir(fd, &str[6]);
+	else if ((ft_strncmp(str, "lls", 3) == 0 && ft_strlen(str) >= 3) ||
+	(ft_strncmp(str, "lcd ", 4) == 0 && ft_strlen(str) > 4) ||
+	(ft_strcmp(str, "lpwd") == 0 && ft_strlen(str) == 4) ||
+	(ft_strncmp(str, "lmkdir ", 7) == 0 && ft_strlen(str) > 7))
+		ft_putendl("\033[32mSUCCESS: client side\033[0m");
 	else
 		print_fd_err("Command not found", fd);
 	return (1);

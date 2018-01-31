@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 10:05:59 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 11:03:37 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	cmd_put_server(int fd, char *buf);
 ** cmd_server
 */
 
-int		check_permissions(int fd, char *absolute_path);
+int		check_permissions_server(int fd, char *absolute_path);
 void	cmd_ls(int fd, char *arg);
 void	cmd_cd(int fd, char *arg, char *absolute_path);
 void	cmd_pwd(int fd);
@@ -90,11 +90,22 @@ void	cmd_get_client(int fd, char *buf);
 void	cmd_put_client(int fd, char *buf);
 
 /*
+** cmd_client
+*/
+
+int		check_permissions_client(char *absolute_path);
+int		cmd_lls(char *arg);
+int		cmd_lcd(char *arg, char *absolute_path);
+int		cmd_lpwd(void);
+int		cmd_lmkdir(char *arg);
+
+/*
 ** client
 */
 
 int		create_client(char *addr, int port);
 void	read_client(int fd, char *buf);
+void	wait_user_input_bis(int fd, char *buf, char *pwd);
 void	wait_user_input(int fd);
 
 #endif

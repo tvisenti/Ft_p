@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 10:06:18 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 11:42:46 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,33 @@ void	read_client(int fd, char *buf)
 		buf[r] = '\0';
 		write(1, buf, r);
 	}
-	write(1, "$> ", 3);
+}
+
+void	wait_user_input_bis(int fd, char *buf, char *pwd)
+{
+	if (ft_strcmp(buf, "lpwd") == 0 && ft_strlen(buf) == 4)
+		cmd_lpwd();
+	else if (ft_strncmp(buf, "lls", 3) == 0 && ft_strlen(buf) >= 3)
+		cmd_lls(&buf[4]);
+	else if (ft_strncmp(buf, "lcd ", 4) == 0 && ft_strlen(buf) > 4)
+		cmd_lcd(&buf[4], pwd);
+	else if (ft_strncmp(buf, "lmkdir ", 7) == 0 && ft_strlen(buf) > 7)
+		cmd_lmkdir(&buf[7]);
+	else
+		read_client(fd, buf);
+	free(buf);
 }
 
 void	wait_user_input(int fd)
 {
 	int		r;
 	char	*buf;
+	char	*pwd;
 
-	write(1, "$> ", 3);
 	buf = NULL;
+	pwd = malloc(sizeof(char) * UCHAR_MAX);
+	getcwd(pwd, UCHAR_MAX);
+	ft_putstr("$> ");
 	while ((r = get_next_line(0, &buf)) > 0)
 	{
 		ft_putendl_fd(buf, fd);
@@ -62,9 +79,11 @@ void	wait_user_input(int fd)
 		else if (ft_strncmp(buf, "put ", 4) == 0 && ft_strlen(buf) > 4)
 			cmd_put_client(fd, &buf[3]);
 		else
-			read_client(fd, ft_strdup(buf));
+			wait_user_input_bis(fd, ft_strdup(buf), pwd);
 		free(buf);
+		ft_putstr("$> ");
 	}
+	free(pwd);
 }
 
 int		main(int ac, char **av)

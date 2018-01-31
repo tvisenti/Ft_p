@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_server.c                                       :+:      :+:    :+:   */
+/*   cmd_client.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/09 11:24:35 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 10:51:22 by tvisenti         ###   ########.fr       */
+/*   Created: 2018/01/31 10:28:00 by tvisenti          #+#    #+#             */
+/*   Updated: 2018/01/31 11:37:52 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-int			check_permissions_server(int fd, char *absolute_path)
+int		check_permissions_client(char *absolute_path)
 {
 	char	path[UCHAR_MAX];
 
@@ -20,13 +20,12 @@ int			check_permissions_server(int fd, char *absolute_path)
 	if (ft_strncmp(absolute_path, path, ft_strlen(absolute_path)) != 0)
 	{
 		chdir(absolute_path);
-		print_fd_err("cd, no permissions to access here", fd);
-		return (0);
+		return (print_error("lcd, no permissions to access here"));
 	}
 	return (1);
 }
 
-void		cmd_ls(int fd, char *arg)
+int		cmd_lls(char *arg)
 {
 	char			*open;
 	DIR				*dir;
@@ -39,61 +38,55 @@ void		cmd_ls(int fd, char *arg)
 		free(open);
 		open = ft_strdup(".");
 	}
+	ft_putendl(arg);
+	ft_putendl(open);
 	if (!(dir = opendir(open)))
-	{
-		return (print_fd_err("ls, can't access to this dir", fd));
-	}
+		return (print_error("lls, can't access to this dir"));
 	while ((file = readdir(dir)))
 	{
 		name = file->d_name;
 		if (ft_strncmp(".", name, 1) != 0)
-			print_fd(name, fd);
+			ft_putendl(name);
 	}
-	print_fd("\033[32mSUCCESS: ls\033[0m", fd);
-	write(fd, "\0", 1);
+	ft_putendl("\033[32mSUCCESS: lls\033[0m");
 	closedir(dir);
+	return (1);
 }
 
-void		cmd_cd(int fd, char *arg, char *absolute_path)
+int		cmd_lcd(char *arg, char *absolute_path)
 {
 	char	*dir;
 	int		ret;
 
 	dir = ft_strdup(arg);
 	if (!dir || ft_strlen(dir) == 0)
-	{
-		return (print_fd_err("cd, Failed to get arg for cd command", fd));
-	}
+		return (print_error("lcd, Failed to get arg for cd command"));
 	if ((ret = chdir(dir)) == -1)
-		return (print_fd_err("cd, chdir failed", fd));
-	if (check_permissions_server(fd, absolute_path) == 0)
-		return ;
-	print_fd("\033[32mSUCCESS: cd\033[0m", fd);
-	write(fd, "\0", 1);
+		return (print_error("lcd, chdir failed"));
+	if (check_permissions_client(absolute_path) == -1)
+		return (-1);
+	ft_putendl("\033[32mSUCCESS: lcd\033[0m");
 	free(dir);
+	return (1);
 }
 
-void		cmd_pwd(int fd)
+int		cmd_lpwd(void)
 {
 	char	path[UCHAR_MAX];
 
 	if (getcwd(path, UCHAR_MAX) == NULL)
-		return (print_fd_err("pwd failed", fd));
-	print_fd(path, fd);
-	print_fd("\033[32mSUCCESS: pwd\033[0m", fd);
-	write(fd, "\0", 1);
+		return (print_error("lpwd failed"));
+	ft_putendl(path);
+	ft_putendl("\033[32mSUCCESS: lpwd\033[0m");
+	return (1);
 }
 
-void		cmd_mkdir(int fd, char *arg)
+int		cmd_lmkdir(char *arg)
 {
 	if (!arg || ft_strlen(arg) == 0)
-	{
-		return (print_fd_err("mkdir failed, no path specified", fd));
-	}
-	ft_putstr("New dir: ");
-	ft_putendl(arg);
+		return (print_error("lmkdir failed, no path specified"));
 	if (mkdir(arg, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) == -1)
-		print_fd_err("mkdir, chdir failed", fd);
-	print_fd("\033[32mSUCCESS: mkdir\033[0m", fd);
-	write(fd, "\0", 1);
+		return (print_error("lmkdir, chdir failed"));
+	ft_putendl("\033[32mSUCCESS: lmkdir\033[0m");
+	return (1);
 }

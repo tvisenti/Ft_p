@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 10:06:28 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 10:40:35 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,5 @@ void			cmd_put_client(int fd, char *buf)
 		return (print_error_get_put("mmap() client side failed"));
 	ft_putendl_fd("TEST_OK", fd);
 	send_put_client(st, fd, ptr);
-	ft_putstr("$> ");
 	close(file);
 }
