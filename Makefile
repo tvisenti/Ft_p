@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/30 16:33:21 by tvisenti          #+#    #+#              #
-#    Updated: 2018/01/31 10:47:30 by tvisenti         ###   ########.fr        #
+#    Updated: 2018/01/31 11:59:00 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,19 +43,18 @@ HEADERS = -I inc/
 
 LIBFT = -Llibft -lft
 
-all : serveur client
+all : ft_lib serveur client
 
 serveur: $(OBJ_S) $(OBJ_L)
-	@echo "\033[31m==> COMPILING in progress ...\033[0m"
-	@make -C libft
+	@echo "\033[1;34mft_p:serveur\t\033[1;33mCompilation\t\033[0;32m-OK-\033[0m"
 	@$(CC) $(CFLAGS) -o $@ $(OBJ_S) $(OBJ_L) $(HEADERS) $(LIBFT)
-	@echo "\033[32m==> SUCCESS !\033[0m"
 
 client: $(OBJ_C) $(OBJ_L)
-	@echo "\033[31m==> COMPILING in progress ...\033[0m"
-	@make -C libft
+	@echo "\033[1;34mft_p:client\t\033[1;33mCompilation\t\033[0;32m-OK-\033[0m"
 	@$(CC) $(CFLAGS) -o $@ $(OBJ_C) $(OBJ_L) $(HEADERS) $(LIBFT)
-	@echo "\033[32m==> SUCCESS !\033[0m"
+
+ft_lib:
+	@make -C libft
 
 $(O_DIR)/%.o: $(SRC_DIR_S)/%.c
 	@mkdir $(O_DIR) 2> /dev/null || true
@@ -70,21 +69,20 @@ $(O_DIR)/%.o: $(SRC_DIR_L)/%.c
 	@$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $<
 
 clean:
-	@echo "\033[35m==> CLEANING in progress ...\033[0m"
 	@rm -rf $(OBJ_S) $(OBJ_C) $(OBJ_L) $(NAME_S) $(NAME_C)
+	@echo "\033[1;34mft_p\t\t\033[1;33mCleaning obj\t\033[0;32m-OK-\033[0m"
+
 
 fclean: clean
 	@make fclean -C libft
 	@rm -rf $(O_DIR)
-	@echo "\033[35m==> CLEANING test files ...\033[0m"
+	@echo "\033[1;34mft_p\t\t\033[1;33mCleaning lib\t\033[0;32m-OK-\033[0m"
 
 re: fclean all
 
 norme:
-	@echo "\n"----------------------- NORMINETTE LIBFT --------------------------"\n"
-	@norminette libft/lib/*.c libft/ft_printf/src/*.c libft/ft_printf/lib/*.c libft/inc/*.h
-	@echo "\n"------------------------ NORMINETTE FT_P --------------------------"\n"
+	@make norme -C libft
 	@norminette client_src/*.c server_src/*.c inc/*.h
-	@echo "\n"--------------------------- END -----------------------------------"\n"
+	@echo "\033[1;34mft_p\t\t\033[1;33mNorminette\t\033[0;32m-OK-\033[0m"
 
 .PHONY: re fclean clean all norme

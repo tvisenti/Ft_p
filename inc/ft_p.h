@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 11:03:37 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 11:45:43 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@
 # include <stdio.h>
 # include <limits.h>
 # include "../libft/inc/libft.h"
+
+/*
+** BONUS
+** Prompt for client
+** Cmd: mkdir, lmkdir
+** lcd, lls, lpwd
+** Everithing is transcripted for server
+*/
 
 /*
 ** handle_file
