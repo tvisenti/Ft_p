@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 17:27:25 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 10:07:31 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_p.h"
+#include "ft_p.h"
 
 /*
 ** Cree un server et recupere avec protobyname le protocol number avec
@@ -119,7 +119,7 @@ int		main(int ac, char **av)
 	{
 		ft_putstr("Usage: ");
 		ft_putstr(av[0]);
-		ft_putendl(" <addr> <port>\n");
+		ft_putendl(" <port>\n");
 		return (-1);
 	}
 	port = atoi(av[1]);

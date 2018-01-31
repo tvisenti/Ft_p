@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 17:27:11 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 10:05:59 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,25 @@
 # include <sys/wait.h>
 # include <stdio.h>
 # include <limits.h>
-# include "libft/inc/libft.h"
+# include "../libft/inc/libft.h"
+
+/*
+** handle_file
+*/
+
+int		open_file_rdonly(char *cmd, int client);
+int		open_file_wronly(char *cmd, int fd);
+int		size_file(int fd);
+int		recv_alert(char *str, int fd);
+
+/*
+** display
+*/
+
+void	print_error_get_put(char *str);
+void	print_fd_err(char *str, int fd);
+void	print_fd(char *str, int fd);
+int		print_error(char *str);
 
 /*
 ** cmd_get_server
@@ -41,45 +59,6 @@ void	cmd_get_server(int fd, char *buf);
 void	cmd_put_server(int fd, char *buf);
 
 /*
-** cmd_get
-*/
-
-void	cmd_get_client(int fd, char *buf);
-
-/*
-** cmd_put
-*/
-
-void	cmd_put_client(int fd, char *buf);
-
-/*
-** handle_file
-*/
-
-int		open_file(char *cmd, int fd);
-int		open_file_read(char *cmd, int fd);
-int		get_size_file(int fd);
-int		recv_alert(char *str, int fd);
-
-/*
-** display
-*/
-
-void	print_fd_err(char *str, int fd);
-void	print_fd(char *str, int fd);
-int		print_error(char *str);
-void	print_error_get_put(char *str);
-
-/*
-** server
-*/
-
-int		get_cmd(char *str, int fd, char *pwd);
-int		create_server(int port);
-void	handler_serv(int fd);
-int		accept_fork(int sock);
-
-/*
 ** cmd_server
 */
 
@@ -90,12 +69,32 @@ void	cmd_pwd(int fd);
 void	cmd_mkdir(int fd, char *arg);
 
 /*
+** server
+*/
+
+int		create_server(int port);
+int		get_cmd(char *str, int fd, char *pwd);
+void	handler_serv(int fd);
+int		accept_fork(int sock);
+
+/*
+** cmd_get_client
+*/
+
+void	cmd_get_client(int fd, char *buf);
+
+/*
+** cmd_put_client
+*/
+
+void	cmd_put_client(int fd, char *buf);
+
+/*
 ** client
 */
 
-void	usage(char *str);
 int		create_client(char *addr, int port);
-void	wait_user_input(int fd);
 void	read_client(int fd, char *buf);
+void	wait_user_input(int fd);
 
 #endif

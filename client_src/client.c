@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 15:53:04 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 10:06:18 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_p.h"
+#include "ft_p.h"
 
 int		create_client(char *addr, int port)
 {

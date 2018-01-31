@@ -6,26 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 09:43:50 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 17:26:42 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 10:06:13 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_p.h"
-
-static int		open_file_get_server(char *cmd, int client)
-{
-	char		*filename;
-	int			file;
-
-	filename = cmd;
-	while (*filename == ' ')
-		++filename;
-	if ((file = open(filename, O_RDONLY)) == -1)
-		ft_putendl_fd("ERROR_FD", client);
-	else
-		ft_putendl_fd("SERVER_OK", client);
-	return (file);
-}
+#include "ft_p.h"
 
 static void		send_get_server(int fd, struct stat st, void *ptr)
 {
@@ -48,9 +33,9 @@ void			cmd_get_server(int fd, char *buf)
 	struct stat	st;
 	void		*ptr;
 
-	if ((file = open_file_get_server(buf, fd)) == -1)
+	if ((file = open_file_rdonly(buf, fd)) == -1)
 		return (print_error_get_put("open() server side failed"));
-	if (recv_alert("VERIF_FD", fd) < 1)
+	if (recv_alert("WRONLY_OK", fd) < 1)
 		return (print_error_get_put("open() client side failed"));
 	if ((fstat(file, &st)) == -1)
 	{

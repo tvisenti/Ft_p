@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:10:41 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/30 17:26:38 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 10:06:32 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_p.h"
+#include "ft_p.h"
 
 void		print_error_get_put(char *str)
 {
@@ -19,19 +19,6 @@ void		print_error_get_put(char *str)
 	ft_putendl("\033[0m");
 	ft_putstr("$> ");
 	return ;
-}
-
-int		print_fd_err_int(char *str, int fd)
-{
-	ft_putstr("\033[31mERROR: ");
-	ft_putstr(str);
-	ft_putendl("\033[0m");
-
-	ft_putstr_fd("\033[31mERROR: ", fd);
-	ft_putstr_fd(str, fd);
-	ft_putendl_fd("\033[0m", fd);
-	write(fd, "\0", 1);
-	return (-1) ;
 }
 
 void	print_fd_err(char *str, int fd)
