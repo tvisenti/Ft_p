@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 10:28:00 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 11:37:52 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/01/31 12:09:15 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int		cmd_lls(char *arg)
 		free(open);
 		open = ft_strdup(".");
 	}
-	ft_putendl(arg);
-	ft_putendl(open);
 	if (!(dir = opendir(open)))
 		return (print_error("lls, can't access to this dir"));
 	while ((file = readdir(dir)))
