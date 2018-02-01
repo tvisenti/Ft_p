@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/30 16:33:21 by tvisenti          #+#    #+#              #
-#    Updated: 2018/01/31 11:59:00 by tvisenti         ###   ########.fr        #
+#    Updated: 2018/02/01 11:44:41 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ re: fclean all
 
 norme:
 	@make norme -C libft
-	@norminette client_src/*.c server_src/*.c inc/*.h
+	@norminette client_src/*.c server_src/*.c lib/*.c inc/*.h 
 	@echo "\033[1;34mft_p\t\t\033[1;33mNorminette\t\033[0;32m-OK-\033[0m"
 
 .PHONY: re fclean clean all norme
