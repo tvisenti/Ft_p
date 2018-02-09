@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/09 11:48:26 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/09 16:06:32 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static int		recv_get_client(int fd, int file, int size_max)
 	while (n < size_max)
 	{
 		size = recv(fd, buff + n, 4096, 0);
-		if (size % 4096 != 0)
-			break ;
 		n += size;
 	}
 	write(file, buff, size_max);
@@ -49,13 +47,16 @@ void			cmd_get_client(int fd, char *buf)
 	int			size;
 
 	if (recv_alert("RDONLY_OK", fd) < 1)
-		return (print_error_get_put_client("open() server side failed"));
+		return (print_error_get_put("open() server side failed"));
 	if ((file = open_file_wronly(buf, fd)) == -1)
-		return (print_error_get_put_client("Can't create the file, already exists or empty"));
+		return (print_error_get_put("Can't create the file, already exists or empty"));
 	if (recv_alert("TEST_OK", fd) < 1)
-		return (print_error_get_put_client("mmap() server side failed"));
+	{
+		ft_putendl("\033[32mSUCCESS: get\033[0m");
+		return (print_error_get_put("Potential error with mmap() server side failed, could be an empty file"));
+	}
 	if ((size = size_file(fd)) == -1)
-		return (print_error_get_put_client("Can't send size from client side"));
+		return (print_error_get_put("Can't send size from client side"));
 	recv_get_client(fd, file, size);
 	ft_putendl_fd("SUCCESS", fd);
 	get_next(fd);

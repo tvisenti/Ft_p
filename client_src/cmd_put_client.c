@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/09 11:11:59 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/09 16:06:38 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,17 @@ void			cmd_put_client(int fd, char *buf)
 	void		*ptr;
 
 	if ((file = open_file_rdonly(buf, fd)) == -1)
-		return (print_error_get_put_client("open() client side failed"));
+		return (print_error_get_put("open() client side failed"));
 	if (recv_alert("WRONLY_OK", fd) < 1)
-		return (print_error_get_put_client("Can't create the file, already exists"));
+		return (print_error_get_put("Can't create the file, already exists"));
 	if ((fstat(file, &st)) == -1)
-		return (print_error_get_put_client("fstat() client side failed"));
+		return (print_error_get_put("fstat() client side failed"));
 	if ((ptr = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, file, 0))
 			== MAP_FAILED)
-		return (print_error_get_put_client("mmap() client side failed"));
+	{
+		ft_putendl("\033[32mSUCCESS: put\033[0m");		
+		return (print_error_get_put("Potential error with mmap() server side failed, could be an empty file"));
+	}
 	ft_putendl_fd("TEST_OK", fd);
 	send_put_client(st, fd, ptr);
 	close(file);

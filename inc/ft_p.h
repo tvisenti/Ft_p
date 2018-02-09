@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:52:59 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/09 11:13:32 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/09 14:57:58 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int		recv_alert(char *str, int fd);
 ** display
 */
 
-void	print_error_get_put_client(char *str);
-void	print_error_get_put_server(char *str);
+void	print_error_get_put(char *str);
 void	print_fd_err(char *str, int fd);
 void	print_fd(char *str, int fd);
 int		print_error(char *str);

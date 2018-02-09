@@ -6,26 +6,17 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:10:41 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/09 11:11:24 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/09 14:56:54 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-void	print_error_get_put_client(char *str)
+void	print_error_get_put(char *str)
 {
 	ft_putstr("\033[31mERROR: ");
 	ft_putstr(str);
 	ft_putendl("\033[0m");
-	return ;
-}
-
-void	print_error_get_put_server(char *str)
-{
-	ft_putstr("\033[31mERROR: ");
-	ft_putstr(str);
-	ft_putendl("\033[0m");
-	ft_putstr("$> ");
 	return ;
 }
 
