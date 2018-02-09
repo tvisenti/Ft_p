@@ -3,80 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tvisenti <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/29 16:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2015/12/10 10:38:45 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/09 13:49:38 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../inc/libft.h"
 
-static long	ft_divint(int n)
+static long		ft_digitnb(int n)
 {
-	int		i;
+	long		size;
 
-	i = 0;
+	if (n == 0)
+		return (1);
+	size = 0;
+	if (n < 0)
+	{
+		size++;
+		n = -n;
+	}
 	while (n != 0)
 	{
-		n = n / 10;
-		i++;
+		n /= 10;
+		size++;
 	}
-	return (i);
+	return (size++);
 }
 
-static int	ft_neg_itoa(long n)
+static int		ft_sign(int n)
 {
 	if (n < 0)
 		return (1);
 	return (0);
 }
 
-static char	*ft_retitoa(int n, int len, char *str, int nb)
+char			*ft_itoa(int n)
 {
-	if (n < 0)
-	{
-		nb = -n;
-		str[0] = '-';
-		while (nb > 9)
-		{
-			str[len--] = (nb % 10) + '0';
-			nb = nb / 10;
-		}
-	}
-	else
-	{
-		len--;
-		while (nb > 9)
-		{
-			str[len--] = (nb % 10) + '0';
-			nb = nb / 10;
-		}
-	}
-	if (nb < 10)
-		str[len] = nb + '0';
-	return (str);
-}
+	long		n_long;
+	long		length;
+	char		*fresh;
 
-char		*ft_itoa(int n)
-{
-	char	*str;
-	int		len;
-	int		nb;
-	int		neg;
-
-	if (n == 0)
-		return (ft_strdup("0"));
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	nb = n;
-	neg = 0;
-	len = ft_divint(n);
-	if (ft_neg_itoa(n) == 1)
-		neg = 1;
-	str = ft_strnew((len) + neg);
-	if (!str)
+	n_long = n;
+	length = ft_digitnb(n_long);
+	fresh = (char *)malloc((length + 1) * sizeof(char));
+	if (!fresh)
 		return (NULL);
-	return (ft_retitoa(n, len, str, nb));
+	fresh[length] = '\0';
+	length--;
+	if (n_long < 0)
+		n_long = -n_long;
+	while (length >= 0)
+	{
+		fresh[length] = (n_long % 10) + '0';
+		length--;
+		n_long /= 10;
+	}
+	if (ft_sign(n))
+		fresh[0] = '-';
+	return (fresh);
 }
