@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/09 16:06:32 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/09 17:01:51 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,15 @@ void			cmd_get_client(int fd, char *buf)
 	if (recv_alert("RDONLY_OK", fd) < 1)
 		return (print_error_get_put("open() server side failed"));
 	if ((file = open_file_wronly(buf, fd)) == -1)
-		return (print_error_get_put("Can't create the file, already exists or empty"));
+	{
+		return (print_error_get_put(\
+			"Can't create the file, already exists or empty"));
+	}
 	if (recv_alert("TEST_OK", fd) < 1)
 	{
 		ft_putendl("\033[32mSUCCESS: get\033[0m");
-		return (print_error_get_put("Potential error with mmap() server side failed, could be an empty file"));
+		return (print_error_get_put(\
+			"Error on mmap(), could be an empty file"));
 	}
 	if ((size = size_file(fd)) == -1)
 		return (print_error_get_put("Can't send size from client side"));

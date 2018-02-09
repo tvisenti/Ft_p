@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/09 16:06:38 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/09 17:00:45 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ void			cmd_put_client(int fd, char *buf)
 	if ((ptr = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, file, 0))
 			== MAP_FAILED)
 	{
-		ft_putendl("\033[32mSUCCESS: put\033[0m");		
-		return (print_error_get_put("Potential error with mmap() server side failed, could be an empty file"));
+		ft_putendl("\033[32mSUCCESS: put\033[0m");
+		return (print_error_get_put(\
+			"Error on mmap(), could be an empty file"));
 	}
 	ft_putendl_fd("TEST_OK", fd);
 	send_put_client(st, fd, ptr);
