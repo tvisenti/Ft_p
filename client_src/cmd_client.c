@@ -6,20 +6,20 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 10:28:00 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 12:09:15 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/09 10:33:25 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-int		check_permissions_client(char *absolute_path)
+int		check_permissions_client(char *absolute_path, char *cur_path)
 {
 	char	path[UCHAR_MAX];
 
 	getcwd(path, UCHAR_MAX);
 	if (ft_strncmp(absolute_path, path, ft_strlen(absolute_path)) != 0)
 	{
-		chdir(absolute_path);
+		chdir(cur_path);
 		return (print_error("lcd, no permissions to access here"));
 	}
 	return (1);
@@ -53,15 +53,17 @@ int		cmd_lls(char *arg)
 
 int		cmd_lcd(char *arg, char *absolute_path)
 {
+	char	cur_path[UCHAR_MAX];
 	char	*dir;
 	int		ret;
 
 	dir = ft_strdup(arg);
+	getcwd(cur_path, UCHAR_MAX);
 	if (!dir || ft_strlen(dir) == 0)
 		return (print_error("lcd, Failed to get arg for cd command"));
 	if ((ret = chdir(dir)) == -1)
 		return (print_error("lcd, chdir failed"));
-	if (check_permissions_client(absolute_path) == -1)
+	if (check_permissions_client(absolute_path, cur_path) == -1)
 		return (-1);
 	ft_putendl("\033[32mSUCCESS: lcd\033[0m");
 	free(dir);

@@ -6,20 +6,21 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 11:24:35 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 10:51:22 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/09 10:33:57 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-int			check_permissions_server(int fd, char *absolute_path)
+int			check_permissions_server(int fd, char *absolute_path,
+	char *cur_path)
 {
 	char	path[UCHAR_MAX];
 
 	getcwd(path, UCHAR_MAX);
 	if (ft_strncmp(absolute_path, path, ft_strlen(absolute_path)) != 0)
 	{
-		chdir(absolute_path);
+		chdir(cur_path);
 		print_fd_err("cd, no permissions to access here", fd);
 		return (0);
 	}
@@ -56,17 +57,17 @@ void		cmd_ls(int fd, char *arg)
 
 void		cmd_cd(int fd, char *arg, char *absolute_path)
 {
+	char	cur_path[UCHAR_MAX];
 	char	*dir;
 	int		ret;
 
 	dir = ft_strdup(arg);
+	getcwd(cur_path, UCHAR_MAX);
 	if (!dir || ft_strlen(dir) == 0)
-	{
 		return (print_fd_err("cd, Failed to get arg for cd command", fd));
-	}
 	if ((ret = chdir(dir)) == -1)
 		return (print_fd_err("cd, chdir failed", fd));
-	if (check_permissions_server(fd, absolute_path) == 0)
+	if (check_permissions_server(fd, absolute_path, cur_path) == 0)
 		return ;
 	print_fd("\033[32mSUCCESS: cd\033[0m", fd);
 	write(fd, "\0", 1);
