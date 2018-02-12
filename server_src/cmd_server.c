@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/09 11:24:35 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/09 16:57:04 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/12 13:34:33 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,10 @@ void		cmd_ls(int fd, char *arg)
 	struct dirent	*file;
 	char			*name;
 
-	open = ft_strdup(arg);
-	if (ft_strlen(arg) == 0 || !arg || arg[0] == '\n' || arg[0] == '\0')
-	{
-		free(open);
+	if ((ft_strcmp(arg, "ls") == 0) || ft_strlen(arg) < 4)
 		open = ft_strdup(".");
-	}
+	else
+		open = ft_strdup(&arg[3]);
 	if (!(dir = opendir(open)))
 	{
 		return (print_fd_err("ls, can't access to this dir", fd));

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 10:28:00 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/09 10:33:25 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/12 13:35:21 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,10 @@ int		cmd_lls(char *arg)
 	struct dirent	*file;
 	char			*name;
 
-	open = ft_strdup(arg);
-	if (ft_strlen(arg) == 0 || !arg || arg[0] == '\n' || arg[0] == '\0')
-	{
-		free(open);
+	if ((ft_strcmp(arg, "lls") == 0) || ft_strlen(arg) < 5)
 		open = ft_strdup(".");
-	}
+	else
+		open = ft_strdup(&arg[4]);
 	if (!(dir = opendir(open)))
 		return (print_error("lls, can't access to this dir"));
 	while ((file = readdir(dir)))
