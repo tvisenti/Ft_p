@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/12 13:39:34 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/12 13:51:34 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void			cmd_get_client(int fd, char *buf)
 	if ((file = open_file_wronly(buf, fd)) == -1)
 	{
 		return (print_error_gp(\
-			"Can't create the file, already exists or empty", file));
+			"Can't create the file, already exists", file));
 	}
 	if (recv_alert("TEST_OK", fd) < 1)
 	{
