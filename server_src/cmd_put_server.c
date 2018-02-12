@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 09:44:36 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/09 16:20:39 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/12 11:38:39 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,18 @@ void				cmd_put_server(int fd, char *buf)
 	int				file;
 	int				size;
 
+	file = -1;
 	if (recv_alert("RDONLY_OK", fd) < 1)
-		return (print_error_get_put("open() client side failed"));
+		return (print_error_get_put("open() client side failed", file));
 	if ((file = open_file_wronly(buf, fd)) == -1)
-		return (print_error_get_put("Can't create the file already exists"));
+		return (print_error_get_put("Can't create the file already exists", file));
 	if (recv_alert("TEST_OK", fd) < 1)
-		return (print_error_get_put("Error on server side"));
+	{
+		close(file);
+		return (ft_putendl("\033[32mSUCCESS: put\033[0m"));
+	}
 	if ((size = size_file(fd)) == -1)
-		return (print_error_get_put("Can't send size from server side"));
+		return (print_error_get_put("Can't send size from server side", file));
 	recv_put_server(fd, file, size);
 	ft_putendl_fd("SUCCESS", fd);
 	ft_putendl("\033[32mSUCCESS: put\033[0m");
