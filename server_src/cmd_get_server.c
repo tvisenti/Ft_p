@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 09:43:50 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/12 11:37:18 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/12 13:39:34 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		send_get_server(int fd, struct stat st, void *ptr, int file)
 	ft_putendl_fd(size, fd);
 	free(size);
 	if (recv_alert("SEND", fd) < 1)
-		return (print_error_get_put("can't get size from client side", file));
+		return (print_error_gp("can't get size from client side", file));
 	send(fd, ptr, st.st_size, 0);
 	munmap(ptr, st.st_size);
 	if (recv_alert("SUCCESS", fd) == 1)
@@ -34,13 +34,13 @@ void			cmd_get_server(int fd, char *buf)
 	void		*ptr;
 
 	if ((file = open_file_rdonly(buf, fd)) == -1)
-		return (print_error_get_put("open() server side failed", file));
+		return (print_error_gp("open() server side failed", file));
 	if (recv_alert("WRONLY_OK", fd) < 1)
-		return (print_error_get_put("open() client side failed", file));
+		return (print_error_gp("open() client side failed", file));
 	if ((fstat(file, &st)) == -1)
 	{
 		ft_putendl_fd("TEST_ERROR", fd);
-		return (print_error_get_put("fstat() server side failed", file));
+		return (print_error_gp("fstat() server side failed", file));
 	}
 	if ((ptr = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, file, 0))
 			== MAP_FAILED)

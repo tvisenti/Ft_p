@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 10:26:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/01/31 10:43:52 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/12 12:09:39 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		get_cmd(char *str, int fd, char *pwd)
 	ft_putstr("$> ");
 	ft_putendl(str);
 	if (ft_strncmp(str, "ls", 2) == 0 && ft_strlen(str) >= 2)
-		cmd_ls(fd, &str[3]);
+		cmd_ls(fd, str);
 	else if (ft_strncmp(str, "cd ", 3) == 0 && ft_strlen(str) > 3)
 		cmd_cd(fd, &str[3], pwd);
 	else if (ft_strncmp(str, "get ", 4) == 0 && ft_strlen(str) > 4)

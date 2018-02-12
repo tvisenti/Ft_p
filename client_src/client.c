@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/12 10:47:32 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/12 13:33:43 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	wait_user_input_bis(int fd, char *buf, char *pwd)
 	if (ft_strcmp(buf, "lpwd") == 0 && ft_strlen(buf) == 4)
 		cmd_lpwd();
 	else if (ft_strncmp(buf, "lls", 3) == 0 && ft_strlen(buf) >= 3)
-		cmd_lls(&buf[4]);
+		cmd_lls(buf);
 	else if (ft_strncmp(buf, "lcd ", 4) == 0 && ft_strlen(buf) > 4)
 		cmd_lcd(&buf[4], pwd);
 	else if (ft_strncmp(buf, "lmkdir ", 7) == 0 && ft_strlen(buf) > 7)

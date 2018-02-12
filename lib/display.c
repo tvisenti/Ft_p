@@ -6,13 +6,13 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:10:41 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/12 11:28:53 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/12 13:39:34 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-void	print_error_get_put(char *str, int file)
+void	print_error_gp(char *str, int file)
 {
 	ft_putstr("\033[31mERROR: ");
 	ft_putstr(str);
