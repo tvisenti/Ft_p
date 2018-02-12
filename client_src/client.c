@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 11:01:14 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/09 13:58:26 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/12 10:47:32 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	wait_user_input_bis(int fd, char *buf, char *pwd)
 		cmd_lmkdir(&buf[7]);
 	else
 		read_client(fd, buf);
-	free(buf);
 }
 
 void	wait_user_input(int fd)
@@ -79,7 +78,7 @@ void	wait_user_input(int fd)
 		else if (ft_strncmp(buf, "put ", 4) == 0 && ft_strlen(buf) > 4)
 			cmd_put_client(fd, &buf[3]);
 		else
-			wait_user_input_bis(fd, ft_strdup(buf), pwd);
+			wait_user_input_bis(fd, buf, pwd);
 		free(buf);
 		ft_putstr("$> ");
 	}
