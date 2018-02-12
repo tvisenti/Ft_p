@@ -6,13 +6,13 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:42:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2018/02/12 11:41:16 by tvisenti         ###   ########.fr       */
+/*   Updated: 2018/02/12 11:52:49 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-static void		send_put_client(struct stat st, int fd, void *ptr)
+static void		send_put_client(struct stat st, int fd, void *ptr, int file)
 {
 	char		*size;
 
@@ -20,11 +20,11 @@ static void		send_put_client(struct stat st, int fd, void *ptr)
 	ft_putendl_fd(size, fd);
 	free(size);
 	if (recv_alert("SEND", fd) < 1)
-		return ;
+		return (print_error_get_put("can't get size from server side", file));
 	send(fd, ptr, st.st_size, 0);
 	munmap(ptr, st.st_size);
 	if (recv_alert("SUCCESS", fd) == 1)
-		ft_putendl("\033[32mSUCCESS: put\033[0m");
+		print_fd("\033[32mSUCCESS: put\033[0m", fd);
 }
 
 void			cmd_put_client(int fd, char *buf)
@@ -50,6 +50,6 @@ void			cmd_put_client(int fd, char *buf)
 		return (ft_putendl("\033[32mSUCCESS: put\033[0m"));
 	}
 	ft_putendl_fd("TEST_OK", fd);
-	send_put_client(st, fd, ptr);
+	send_put_client(st, fd, ptr, file);
 	close(file);
 }
